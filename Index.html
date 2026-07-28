@@ -9,26 +9,26 @@
             --bg-color: #f7f5f0;
             --card-bg: #ffffff;
             --text-dark: #4a4a4a;
-            --accent-neutral: #8c9d83; /* Verde salvia neutro */
+            --accent-neutral: #8c9d83;
             --accent-warm: #d0b8ac;
             --border-color: #e2ddd5;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-dark); padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        body { background-color: var(--bg-color); color: var(--text-dark); padding: 15px 10px; display: flex; justify-content: center; }
         .container { max-width: 800px; width: 100%; background: var(--card-bg); border-radius: 20px; padding: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         
         .canva-container {
             width: 100%;
-            margin-bottom: 25px;
-            border-radius: 15px;
+            margin-bottom: 20px;
+            border-radius: 12px;
             overflow: hidden;
         }
 
         .bingo-section-title {
             text-align: center;
             color: #3b4e43;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-size: 1.4rem;
         }
         
@@ -40,16 +40,31 @@
         .bingo-card.locked { background-color: #eee9e0; border-color: #ccc; cursor: not-allowed; }
         .bingo-card.locked .num { background: #8c857b; }
 
-        .form-section { background: #f4efe6; border-radius: 12px; padding: 20px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-        .form-section input { padding: 10px; border: 1px solid #ccc; border-radius: 6px; flex: 1; min-width: 140px; }
-        .btn-submit { background: var(--accent-neutral); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 5px; }
+        .form-section { background: #f4efe6; border-radius: 12px; padding: 20px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 25px; }
+        .form-section input { padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 0.95rem; flex: 1; min-width: 140px; }
+        .btn-submit { background: var(--accent-neutral); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 5px; font-size: 1rem; }
         .btn-submit:disabled { background: #ccc; }
 
-        /* Estilos del Panel de Administrador */
-        .admin-section { margin-top: 30px; text-align: center; width: 100%; max-width: 800px; margin-bottom: 40px; }
-        .btn-admin-toggle { background: #3b4e43; color: white; border: none; padding: 12px 20px; font-size: 0.9rem; font-weight: bold; border-radius: 8px; cursor: pointer; display: inline-block; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .btn-admin-toggle:hover { background: #2c3b32; }
-        .admin-panel { display: none; background: white; border-radius: 12px; padding: 15px; border: 1px solid var(--border-color); margin-top: 15px; text-align: left; }
+        /* SECCIÓN ADMINISTRADOR DENTRO DEL CONTENEDOR */
+        .admin-section {
+            border-top: 2px dashed var(--border-color);
+            padding-top: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn-admin-toggle {
+            background: #3b4e43;
+            color: #ffffff;
+            border: none;
+            padding: 12px 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
+        }
+        .admin-panel { display: none; background: #faf8f5; border-radius: 12px; padding: 15px; border: 1px solid var(--border-color); margin-top: 15px; text-align: left; }
         .admin-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
         .admin-table th, .admin-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         .admin-table th { background: #f4efe6; color: #3b4e43; }
@@ -65,9 +80,10 @@
 
 <div class="container">
 
+    <!-- TARJETA CANVA EMBED -->
     <div class="canva-container">
-        <div style="position: relative; width: 100%; height: 0; padding-top: 140.9524%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform;">
-            <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+        <div style="position: relative; width: 100%; height: 0; padding-top: 140.9524%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); overflow: hidden; border-radius: 8px;">
+            <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;"
               src="https://www.canva.com/design/DAHQtH13JZ4/ZJlbWeLlUDXbXEjV24dcUA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
             </iframe>
         </div>
@@ -87,31 +103,31 @@
         <button class="btn-submit" id="btnRegister" disabled onclick="registerCard()">Confirmar e Inscribirme</button>
     </div>
 
-</div>
-
-<!-- PANEL DE CONTROL DE ADMINISTRADOR -->
-<div class="admin-section">
-    <button class="btn-admin-toggle" onclick="toggleAdminPanel()">🔒 Ver lista de inscritos (Administrador)</button>
-    
-    <div class="admin-panel" id="adminPanel">
-        <h4 style="color:#3b4e43; margin-bottom:10px;">📋 Registro de Inscritos</h4>
-        <div style="overflow-x:auto;">
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Casilla</th>
-                        <th>Nombre</th>
-                        <th>Teléfono</th>
-                        <th>Regalo</th>
-                    </tr>
-                </thead>
-                <tbody id="adminTableBody">
-                    <!-- Se carga automáticamente -->
-                </tbody>
-            </table>
+    <!-- BOTÓN Y PANEL DE ADMINISTRADOR DENTRO DEL CUADRO BLANCO -->
+    <div class="admin-section">
+        <button class="btn-admin-toggle" onclick="toggleAdminPanel()">🔒 Panel Administrador (Ver Inscritos)</button>
+        
+        <div class="admin-panel" id="adminPanel">
+            <h4 style="color:#3b4e43; margin-bottom:10px;">📋 Registro de Inscritos</h4>
+            <div style="overflow-x:auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Casilla</th>
+                            <th>Nombre</th>
+                            <th>Teléfono</th>
+                            <th>Regalo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody">
+                        <!-- Se carga automáticamente -->
+                    </tbody>
+                </table>
+            </div>
+            <button onclick="downloadCSV()" style="margin-top:12px; background:#4a5d4e; color:white; border:none; padding:10px 15px; border-radius:6px; font-weight:bold; font-size:0.85rem; cursor:pointer;">📥 Descargar Excel / CSV</button>
         </div>
-        <button onclick="downloadCSV()" style="margin-top:10px; background:#4a5d4e; color:white; border:none; padding:8px 12px; border-radius:6px; font-size:0.8rem; cursor:pointer;">📥 Descargar Excel / CSV</button>
     </div>
+
 </div>
 
 <div class="modal-overlay" id="modal">
