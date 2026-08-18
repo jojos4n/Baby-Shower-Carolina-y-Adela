@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* ============ CONFIGURA AQUÍ LOS NOMBRES Y EL WHATSAPP ============ */
   :root{
     --ink:#2E2A3D;
     --paper:#FBF5EC;
@@ -35,6 +34,17 @@
   }
   a{color:inherit;}
 
+  /* ---------- BANNER DE ESTADO ---------- */
+  .status-banner{
+    display:none;
+    background:#B85F6B;
+    color:#fff;
+    text-align:center;
+    font-size:12.5px;
+    padding:8px 16px;
+  }
+  .status-banner.show{display:block;}
+
   /* ---------- HERO ---------- */
   .hero{
     position:relative;
@@ -43,17 +53,11 @@
     overflow:hidden;
     background:linear-gradient(180deg, var(--paper) 0%, var(--paper) 70%, var(--paper-2) 100%);
   }
-  .ribbon-wrap{
-    width:min(320px, 70vw);
-    margin:0 auto 18px;
-  }
+  .ribbon-wrap{ width:min(320px, 70vw); margin:0 auto 18px; }
   .ribbon-wrap svg{width:100%;height:auto;display:block;}
   .ribbon-a, .ribbon-b{
-    fill:none;
-    stroke-width:6;
-    stroke-linecap:round;
-    stroke-dasharray:600;
-    stroke-dashoffset:600;
+    fill:none; stroke-width:6; stroke-linecap:round;
+    stroke-dasharray:600; stroke-dashoffset:600;
     animation:draw 1.6s ease forwards;
   }
   .ribbon-a{stroke:var(--rose);}
@@ -63,254 +67,132 @@
     .ribbon-a,.ribbon-b{animation:none; stroke-dashoffset:0;}
   }
   .eyebrow{
-    text-transform:uppercase;
-    letter-spacing:.14em;
-    font-size:12px;
-    color:var(--rose-deep);
-    font-weight:600;
-    margin-bottom:10px;
+    text-transform:uppercase; letter-spacing:.14em; font-size:12px;
+    color:var(--rose-deep); font-weight:600; margin-bottom:10px;
   }
-  .hero h1{
-    font-size:clamp(30px,6vw,46px);
-    margin:0 0 12px;
-  }
-  .hero h1 em{
-    font-style:italic;
-    color:var(--rose-deep);
-  }
-  .hero p{
-    max-width:520px;
-    margin:0 auto;
-    color:#5A5468;
-    font-size:15.5px;
-    line-height:1.55;
-  }
+  .hero h1{ font-size:clamp(30px,6vw,46px); margin:0 0 12px; }
+  .hero h1 em{ font-style:italic; color:var(--rose-deep); }
+  .hero p{ max-width:520px; margin:0 auto; color:#5A5468; font-size:15.5px; line-height:1.55; }
 
   /* ---------- FILTERS ---------- */
   .filters{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    justify-content:center;
-    padding:22px 20px 6px;
-    max-width:960px;
-    margin:0 auto;
+    display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
+    padding:22px 20px 6px; max-width:960px; margin:0 auto;
   }
   .filter-btn{
-    border:1px solid var(--line);
-    background:#fff;
-    color:var(--ink);
-    padding:7px 14px;
-    border-radius:999px;
-    font-size:13px;
-    font-family:'Work Sans',sans-serif;
-    cursor:pointer;
-    transition:all .15s ease;
+    border:1px solid var(--line); background:#fff; color:var(--ink);
+    padding:7px 14px; border-radius:999px; font-size:13px;
+    font-family:'Work Sans',sans-serif; cursor:pointer; transition:all .15s ease;
   }
   .filter-btn:hover{border-color:var(--rose-deep);}
-  .filter-btn.active{
-    background:var(--ink);
-    color:var(--paper);
-    border-color:var(--ink);
-  }
+  .filter-btn.active{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
 
   /* ---------- GRID ---------- */
   .grid{
-    max-width:960px;
-    margin:18px auto 140px;
-    padding:0 20px;
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(210px,1fr));
-    gap:18px;
+    max-width:960px; margin:18px auto 140px; padding:0 20px;
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(210px,1fr)); gap:18px;
   }
   .card{
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden; display:flex; flex-direction:column;
   }
   .card-img{
-    width:100%;
-    aspect-ratio:1/1;
+    width:100%; aspect-ratio:1/1;
     background:linear-gradient(135deg, var(--paper-2), #fff);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
   }
   .card-img img{width:100%;height:100%;object-fit:cover;display:block;}
-  .card-img .placeholder{
-    font-family:'Fraunces',serif;
-    font-size:34px;
-    color:var(--rose-deep);
-    opacity:.55;
-  }
-  .card-body{
-    padding:12px 14px 14px;
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    flex:1;
-  }
+  .card-img .placeholder{ font-family:'Fraunces',serif; font-size:34px; color:var(--rose-deep); opacity:.55; }
+  .card-body{ padding:12px 14px 14px; display:flex; flex-direction:column; gap:6px; flex:1; }
   .card-name{font-size:14.5px;font-weight:600;line-height:1.3;}
   .card-stock{font-size:11.5px;color:#8b8496;}
   .card-stock.low{color:var(--rose-deep);}
-  .card-price{
-    font-family:'Fraunces',serif;
-    font-size:19px;
-    color:var(--rose-deep);
-    margin-top:2px;
-  }
-  .qty-row{
-    margin-top:auto;
-    padding-top:8px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:8px;
-  }
-  .stepper{
-    display:flex;
-    align-items:center;
-    border:1px solid var(--line);
-    border-radius:8px;
-    overflow:hidden;
-  }
-  .stepper button{
-    width:30px;height:30px;
-    border:none;
-    background:var(--paper-2);
-    color:var(--ink);
-    font-size:16px;
-    cursor:pointer;
-  }
+  .card-price{ font-family:'Fraunces',serif; font-size:19px; color:var(--rose-deep); margin-top:2px; }
+  .qty-row{ margin-top:auto; padding-top:8px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .stepper{ display:flex; align-items:center; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .stepper button{ width:30px;height:30px; border:none; background:var(--paper-2); color:var(--ink); font-size:16px; cursor:pointer; }
   .stepper button:disabled{opacity:.35;cursor:not-allowed;}
-  .stepper span{
-    width:28px;
-    text-align:center;
-    font-size:14px;
-  }
+  .stepper span{ width:28px; text-align:center; font-size:14px; }
   .add-btn{
-    flex:1;
-    border:none;
-    background:var(--ink);
-    color:var(--paper);
-    padding:8px 10px;
-    border-radius:8px;
-    font-size:13px;
-    cursor:pointer;
-    font-family:'Work Sans',sans-serif;
-    transition:opacity .15s;
+    flex:1; border:none; background:var(--ink); color:var(--paper);
+    padding:8px 10px; border-radius:8px; font-size:13px; cursor:pointer;
+    font-family:'Work Sans',sans-serif; transition:opacity .15s;
   }
   .add-btn:disabled{background:#cfc9d6;cursor:not-allowed;}
   .add-btn.in-cart{background:var(--rose-deep);}
 
   /* ---------- STICKY CART BAR ---------- */
   .cart-bar{
-    position:fixed;
-    left:0;right:0;bottom:0;
-    background:var(--ink);
-    color:var(--paper);
-    padding:14px 20px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:14px;
-    transform:translateY(110%);
-    transition:transform .3s ease;
-    z-index:50;
+    position:fixed; left:0;right:0;bottom:0; background:var(--ink); color:var(--paper);
+    padding:14px 20px; display:flex; align-items:center; justify-content:space-between;
+    gap:14px; transform:translateY(110%); transition:transform .3s ease; z-index:50;
   }
   .cart-bar.show{transform:translateY(0);}
   .cart-bar .info{font-size:13.5px;color:#D8D2E6;}
-  .cart-bar .total{
-    font-family:'Fraunces',serif;
-    font-size:20px;
-    color:#fff;
-  }
+  .cart-bar .total{ font-family:'Fraunces',serif; font-size:20px; color:#fff; }
   .cart-bar button{
-    background:var(--rose);
-    color:var(--ink);
-    border:none;
-    padding:10px 18px;
-    border-radius:8px;
-    font-size:14px;
-    font-weight:600;
-    cursor:pointer;
-    font-family:'Work Sans',sans-serif;
-    white-space:nowrap;
+    background:var(--rose); color:var(--ink); border:none; padding:10px 18px;
+    border-radius:8px; font-size:14px; font-weight:600; cursor:pointer;
+    font-family:'Work Sans',sans-serif; white-space:nowrap;
   }
 
   /* ---------- MODAL ---------- */
   .overlay{
-    position:fixed;inset:0;
-    background:rgba(46,42,61,0.55);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:100;
+    position:fixed;inset:0; background:rgba(46,42,61,0.55);
+    display:none; align-items:center; justify-content:center; padding:20px; z-index:100;
   }
   .overlay.show{display:flex;}
   .modal{
-    background:var(--paper);
-    border-radius:16px;
-    max-width:440px;
-    width:100%;
-    max-height:82vh;
-    overflow-y:auto;
-    padding:26px 24px 22px;
+    background:var(--paper); border-radius:16px; max-width:440px; width:100%;
+    max-height:82vh; overflow-y:auto; padding:26px 24px 22px;
   }
   .modal h2{font-size:22px;margin:0 0 4px;}
   .modal p.sub{font-size:13.5px;color:#5A5468;margin:0 0 16px;}
   .modal-list{list-style:none;margin:0 0 14px;padding:0;border-top:1px solid var(--line);}
-  .modal-list li{
-    display:flex;justify-content:space-between;
-    padding:9px 0;
-    border-bottom:1px solid var(--line);
-    font-size:13.5px;
-  }
+  .modal-list li{ display:flex;justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--line); font-size:13.5px; }
   .modal-list li span.name{color:var(--ink);}
   .modal-list li span.sub{color:#8b8496;font-size:12px;display:block;}
-  .modal-total{
-    display:flex;justify-content:space-between;align-items:baseline;
-    padding-top:6px;margin-bottom:20px;
-  }
+  .modal-list li.failed .name{ color:#8b8496; text-decoration:line-through; }
+  .modal-list li.failed span.sub{ color:var(--rose-deep); text-decoration:none; }
+  .modal-total{ display:flex; justify-content:space-between; align-items:baseline; padding-top:6px; margin-bottom:16px; }
   .modal-total .label{font-size:13px;color:#5A5468;}
   .modal-total .amount{font-family:'Fraunces',serif;font-size:26px;color:var(--rose-deep);}
+  .name-field{ margin-bottom:16px; }
+  .name-field label{ font-size:12.5px; color:#5A5468; display:block; margin-bottom:5px; }
+  .name-field input{
+    width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--line);
+    font-family:'Work Sans',sans-serif; font-size:14px; background:#fff; color:var(--ink);
+  }
   .modal-actions{display:flex;flex-direction:column;gap:9px;}
   .modal-actions button, .modal-actions a{
-    display:block;
-    text-align:center;
-    text-decoration:none;
-    padding:12px;
-    border-radius:9px;
-    font-size:14px;
-    font-weight:600;
-    cursor:pointer;
-    border:none;
-    font-family:'Work Sans',sans-serif;
+    display:block; text-align:center; text-decoration:none; padding:12px;
+    border-radius:9px; font-size:14px; font-weight:600; cursor:pointer;
+    border:none; font-family:'Work Sans',sans-serif;
   }
+  .btn-confirm{background:var(--ink);color:var(--paper);}
+  .btn-confirm:disabled{background:#cfc9d6;cursor:not-allowed;}
   .btn-whatsapp{background:#3E8F5B;color:#fff;}
   .btn-copy{background:#fff;color:var(--ink);border:1px solid var(--line) !important;}
   .btn-close{background:transparent;color:#8b8496;padding:8px;}
-  .empty-msg{
-    text-align:center;
-    color:#8b8496;
-    padding:40px 20px;
-    grid-column:1/-1;
-    font-size:14px;
+  .empty-msg{ text-align:center; color:#8b8496; padding:40px 20px; grid-column:1/-1; font-size:14px; }
+
+  /* ---------- FEED ---------- */
+  .feed{ max-width:640px; margin:0 auto 60px; padding:0 20px; }
+  .feed h2{ font-size:18px; text-align:center; margin-bottom:14px; }
+  .feed ul{ list-style:none; margin:0; padding:0; }
+  .feed li{
+    background:#fff; border:1px solid var(--line); border-radius:10px;
+    padding:10px 14px; font-size:13px; margin-bottom:8px; color:#5A5468;
   }
-  .thanks{
-    text-align:center;
-    padding:6px 0 22px;
-    color:#8b8496;
-    font-size:12.5px;
-  }
+  .feed li b{ color:var(--ink); }
+  .feed .empty{ text-align:center; color:#b3adc0; font-size:13px; }
+
+  .thanks{ text-align:center; padding:6px 0 22px; color:#8b8496; font-size:12.5px; }
 </style>
 </head>
 <body>
+
+<div class="status-banner" id="statusBanner">Conectando con la lista compartida…</div>
 
 <section class="hero">
   <div class="ribbon-wrap">
@@ -322,13 +204,18 @@
   <div class="eyebrow">Baby shower · dos hilos, un mismo cariño</div>
   <h1>Un regalito para <em id="hero-names">las gemelas</em></h1>
   <p>Elige lo que quieras regalar, la cantidad, y confirma tu selección — así los papás
-     saben qué ya está cubierto. Nada se cobra de verdad, es una forma simbólica de
-     armar la lista juntos. 💛</p>
+     saben qué ya está cubierto. El conteo se comparte en tiempo real con todos los
+     invitados, así que lo que ves siempre está al día. 💛</p>
 </section>
 
 <div class="filters" id="filters"></div>
 
 <div class="grid" id="grid"></div>
+
+<section class="feed">
+  <h2>Regalos ya confirmados</h2>
+  <ul id="feedList"><li class="empty">Todavía nadie ha confirmado — ¡sé la primera persona!</li></ul>
+</section>
 
 <div class="cart-bar" id="cartBar">
   <div class="info" id="cartInfo">0 artículos</div>
@@ -339,64 +226,177 @@
 <div class="overlay" id="overlay">
   <div class="modal">
     <h2>Tu selección</h2>
-    <p class="sub">Revisa el resumen antes de "confirmar el pago" simbólico.</p>
+    <p class="sub" id="modalSub">Revisa el resumen y confirma para reservarlo — el cupo se descuenta al instante para todos.</p>
     <ul class="modal-list" id="modalList"></ul>
     <div class="modal-total">
       <span class="label">Total</span>
       <span class="amount" id="modalTotal">$0</span>
     </div>
-    <div class="modal-actions">
+    <div class="name-field" id="nameField">
+      <label for="guestName">Tu nombre (para que los papás sepan a quién agradecer)</label>
+      <input type="text" id="guestName" placeholder="Ej: Tía Camila">
+    </div>
+    <div class="modal-actions" id="modalActionsPre">
+      <button class="btn-confirm" id="confirmBtn">Confirmar y reservar</button>
+      <button class="btn-close" id="closeBtn">Seguir eligiendo</button>
+    </div>
+    <div class="modal-actions" id="modalActionsPost" style="display:none;">
       <a class="btn-whatsapp" id="waBtn" href="#" target="_blank" rel="noopener">Enviar resumen por WhatsApp</a>
       <button class="btn-copy" id="copyBtn">Copiar resumen</button>
-      <button class="btn-close" id="closeBtn">Seguir eligiendo</button>
+      <button class="btn-close" id="doneBtn">Listo</button>
     </div>
   </div>
 </div>
 
 <p class="thanks">Gracias por acompañarnos en esta espera ✨</p>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
 /* ================================================================
    1) CONFIGURACIÓN — edita esto con tus datos
    ================================================================ */
 const CONFIG = {
-  names: "Baby Shower",              // aparece en el título del hero
-  whatsappNumber: "56926459015",     // número de los papás, formato 569XXXXXXXX, sin +
+  names: "las gemelas",              // aparece en el título del hero
+  whatsappNumber: "56900000000",     // número de WhatsApp de los papás, formato 569XXXXXXXX
+
+  // Pega aquí el objeto de configuración de TU proyecto de Firebase.
+  // Instrucciones paso a paso en el README.md que viene junto a este archivo.
+  firebase: {
+    apiKey: "PEGA_AQUI",
+    authDomain: "PEGA_AQUI.firebaseapp.com",
+    databaseURL: "https://PEGA_AQUI-default-rtdb.firebaseio.com",
+    projectId: "PEGA_AQUI",
+    storageBucket: "PEGA_AQUI.appspot.com",
+    messagingSenderId: "PEGA_AQUI",
+    appId: "PEGA_AQUI"
+  }
 };
 
 /* ================================================================
    2) ARTÍCULOS — agrega, borra o edita libremente.
-      "image": ruta relativa a una carpeta "images/" que tú creas
-      en el mismo repositorio (ver README). Si la imagen no existe
-      o no la has subido aún, se muestra un ícono de reemplazo.
-      "stock": cuántas unidades de ese regalo se pueden "tomar".
    ================================================================ */
 const ITEMS = [
-  { id:"bodies0-1m", name:"Bodies 0-1 mes", price:5000, stock:8, category:"Ropa", image:"images/bodies.jpg" },
-  { id:"Bodies1-3m", name:"Bodies 1-3 meses", price:5000, stock:6, category:"Ropa", image:"images/bodies2.jpg" },
-  { id:"Bodies3-6", name:"Bodies 3-6 meses", price:5000, stock:15, category:"Ropa", image:"images/bodies3.jpg" },
-  { id:"vestiditos", name:"Vestidos diferentes etapas", price:7500, stock:6, category:"Ropa", image:"images/vestidos.jpg" },
-  { id:"chalecos", name:"Chalecos diferentes etapas", price:5000, stock:12, category:"Ropa", image:"images/chalecos.jpg" },
-  { id:"mantita", name:"Mantitas de muselina y paños de algodón", price:5000, stock:5, category:"Cuna", image:"images/mantita.jpg" },
-  { id:"accesorios de ropa", name:"Panty y gorritas", price:4000, stock:10, category:"Ropa", image:"images/accesorios.jpg" },
-  { id:"accesorios higiene", name:"Aspirador nasal, lima electrica, etc.", price:5000, stock:10, category:"Higiene", image:"images/higiene.jpg" }
+  { id:"panales-rn", name:"Pack pañales talla RN", price:9990, stock:6, category:"Higiene", image:"images/panales.jpg" },
+  { id:"toallitas", name:"Toallitas húmedas (pack x3)", price:6990, stock:8, category:"Higiene", image:"images/toallitas.jpg" },
+  { id:"body-ml", name:"Body manga larga (par)", price:12990, stock:10, category:"Ropa", image:"images/body.jpg" },
+  { id:"mamadera", name:"Mamadera anti-cólico", price:8990, stock:6, category:"Alimentación", image:"images/mamadera.jpg" },
+  { id:"chupetes", name:"Set de chupetes", price:5990, stock:10, category:"Alimentación", image:"images/chupetes.jpg" },
+  { id:"mantita", name:"Mantita de algodón", price:14990, stock:6, category:"Cuna", image:"images/mantita.jpg" },
+  { id:"termometro", name:"Termómetro digital", price:9990, stock:2, category:"Higiene", image:"images/termometro.jpg" },
+  { id:"aspirador", name:"Aspirador nasal", price:7990, stock:4, category:"Higiene", image:"images/aspirador.jpg" },
+  { id:"set-bano", name:"Set de baño (esponja + toalla capucha)", price:15990, stock:6, category:"Higiene", image:"images/setbano.jpg" },
+  { id:"sabanas", name:"Sábanas para cuna (par)", price:17990, stock:4, category:"Cuna", image:"images/sabanas.jpg" },
+
+  // Bodies 0-1 mes — ajusta precios y stock a gusto
+  { id:"body-flores-rosa", name:"Body flores rosa, manga alada", price:9990, stock:2, category:"Bodies 0-1 mes", image:"images/body-flores-rosa.jpg" },
+  { id:"body-flores-manga-larga", name:"Body flores, manga larga y cuello bebé", price:11990, stock:2, category:"Bodies 0-1 mes", image:"images/body-flores-manga-larga.jpg" },
+  { id:"set-body-cerezas-rosado", name:"Set 2 bodies: cerezas + rosado waffle", price:13990, stock:2, category:"Bodies 0-1 mes", image:"images/set-body-cerezas-rosado.jpg" },
+  { id:"body-naranjas", name:"Body naranjas con vincha a juego", price:10990, stock:2, category:"Bodies 0-1 mes", image:"images/body-naranjas.jpg" },
+  { id:"body-flores-silvestres", name:"Body flores silvestres con vincha", price:10990, stock:2, category:"Bodies 0-1 mes", image:"images/body-flores-silvestres.jpg" },
+  { id:"pijama-flores-vincha", name:"Pijama flores manga larga con vincha", price:12990, stock:2, category:"Bodies 0-1 mes", image:"images/pijama-flores-vincha.jpg" },
+
+  // Bodies 1-3 meses — ajusta precios y stock a gusto
+  { id:"body-flores-colibries", name:"Body flores y colibríes, cuello de encaje", price:13990, stock:2, category:"Bodies 1-3 meses", image:"images/body-flores-colibries.jpg" },
+  { id:"body-floral-celeste", name:"Body floral celeste, cuello de encaje", price:13990, stock:2, category:"Bodies 1-3 meses", image:"images/body-floral-celeste.jpg" },
+  { id:"body-blanco-lazo-mostaza", name:"Body blanco, lazo mostaza", price:11990, stock:2, category:"Bodies 1-3 meses", image:"images/body-blanco-lazo-mostaza.jpg" },
+  { id:"body-crema-cerezas", name:"Body crema, cuello cerezas bordado", price:12990, stock:2, category:"Bodies 1-3 meses", image:"images/body-crema-cerezas.jpg" },
+  { id:"body-verde-salvia", name:"Body verde salvia liso, con vincha", price:11990, stock:2, category:"Bodies 1-3 meses", image:"images/body-verde-salvia.jpg" },
+
+  // Bodies 3-6 meses — ajusta precios y stock a gusto
+  { id:"set-lunares-rosa", name:"Conjunto lunares rosa: body + pantalón + vincha", price:15990, stock:2, category:"Bodies 3-6 meses", image:"images/set-lunares-rosa.jpg" },
+  { id:"set-verde-encaje-floral", name:"Conjunto verde salvia: body encaje + pantalón floral", price:15990, stock:2, category:"Bodies 3-6 meses", image:"images/set-verde-encaje-floral.jpg" },
+  { id:"body-tejido-conejo", name:"Body tejido, conejo y flores", price:14990, stock:2, category:"Bodies 3-6 meses", image:"images/body-tejido-conejo.jpg" },
+  { id:"body-tejido-lila", name:"Body tejido lila, cuello de encaje", price:14990, stock:2, category:"Bodies 3-6 meses", image:"images/body-tejido-lila.jpg" },
+  { id:"body-tejido-verde-flores", name:"Body tejido verde, flores blancas", price:13990, stock:2, category:"Bodies 3-6 meses", image:"images/body-tejido-verde-flores.jpg" },
+  { id:"body-flores-cuello-grande", name:"Body flores, cuello grande bordado", price:13990, stock:2, category:"Bodies 3-6 meses", image:"images/body-flores-cuello-grande.jpg" },
+  { id:"pijama-floral-durazno", name:"Pijama enterizo floral durazno con vincha", price:14990, stock:2, category:"Bodies 3-6 meses", image:"images/pijama-floral-durazno.jpg" },
+  { id:"pack-3-bodies-blancos", name:"Pack 3 bodies blancos cruzados", price:12990, stock:2, category:"Bodies 3-6 meses", image:"images/pack-3-bodies-blancos.jpg" },
+
+  // Chalecos 0-6 meses — ajusta precios y stock a gusto
+  { id:"chaleco-blanco-osito", name:"Chaleco tejido blanco, osito", price:12990, stock:2, category:"Chalecos 0-6 meses", image:"images/chaleco-blanco-osito.jpg" },
+  { id:"chaleco-blanco-corazones", name:"Chaleco tejido blanco, corazones", price:12990, stock:2, category:"Chalecos 0-6 meses", image:"images/chaleco-blanco-corazones.jpg" },
+  { id:"chaleco-beige-flores", name:"Chaleco beige, flores bordadas", price:13990, stock:2, category:"Chalecos 0-6 meses", image:"images/chaleco-beige-flores.jpg" },
+  { id:"chaleco-verde-flores", name:"Chaleco verde salvia, flores bordadas", price:13990, stock:2, category:"Chalecos 0-6 meses", image:"images/chaleco-verde-flores.jpg" },
+  { id:"chaleco-blanco-lazos", name:"Chaleco blanco, cierre de lazos", price:12990, stock:2, category:"Chalecos 0-6 meses", image:"images/chaleco-blanco-lazos.jpg" },
+  { id:"abrigo-rosa-boina", name:"Abrigo rosa con boina a juego", price:18990, stock:2, category:"Chalecos 0-6 meses", image:"images/abrigo-rosa-boina.jpg" },
+
+  // Vestidos 0-6 meses — ajusta precios y stock a gusto
+  { id:"vestido-verde-tul", name:"Vestido verde salvia, falda tul bordada", price:15990, stock:2, category:"Vestidos 0-6 meses", image:"images/vestido-verde-tul.jpg" },
+  { id:"vestido-beige-lazo", name:"Vestido beige, lazo y falda tul", price:15990, stock:2, category:"Vestidos 0-6 meses", image:"images/vestido-beige-lazo.jpg" },
+  { id:"vestido-burdeo-flores", name:"Vestido burdeo, flores bordadas", price:16990, stock:2, category:"Vestidos 0-6 meses", image:"images/vestido-burdeo-flores.jpg" },
+  { id:"vestido-verde-botella-flores", name:"Vestido verde botella, flores bordadas", price:16990, stock:2, category:"Vestidos 0-6 meses", image:"images/vestido-verde-botella-flores.jpg" },
+  { id:"vestido-amarillo-capas", name:"Vestido amarillo, capas y lazo", price:14990, stock:2, category:"Vestidos 0-6 meses", image:"images/vestido-amarillo-capas.jpg" },
+  { id:"vestido-celeste-capas", name:"Vestido celeste, capas y lazo", price:14990, stock:2, category:"Vestidos 0-6 meses", image:"images/vestido-celeste-capas.jpg" },
+
+  // Accesorios de vestuario — ajusta precios y stock a gusto
+  { id:"botitas-tejidas-crema", name:"Botitas tejidas crema", price:8990, stock:2, category:"Accesorios de vestuario", image:"images/botitas-tejidas-crema.jpg" },
+  { id:"botitas-tejidas-beige", name:"Botitas tejidas beige", price:8990, stock:2, category:"Accesorios de vestuario", image:"images/botitas-tejidas-beige.jpg" },
+  { id:"pack-calcetines-encaje", name:"Pack calcetines de encaje con flores", price:7990, stock:2, category:"Accesorios de vestuario", image:"images/pack-calcetines-encaje.jpg" },
+  { id:"sombrero-blanco-bordado", name:"Sombrero blanco bordado", price:9990, stock:2, category:"Accesorios de vestuario", image:"images/sombrero-blanco-bordado.jpg" },
+  { id:"panty-encaje-crema", name:"Panty de encaje crema", price:8990, stock:2, category:"Accesorios de vestuario", image:"images/panty-encaje-crema.jpg" },
+  { id:"pack-pantys-lazo", name:"Pack 2 pantys con lazo (blanco y rosa)", price:9990, stock:2, category:"Accesorios de vestuario", image:"images/pack-pantys-lazo.jpg" },
+
+  // Útiles de cuna e higiene — ajusta precios y stock a gusto
+  { id:"pack-mantas-gasa", name:"Pack 3 mantas de gasa de algodón", price:14990, stock:2, category:"Útiles de cuna e higiene", image:"images/pack-mantas-gasa.jpg" },
+  { id:"saco-dormir-corazones", name:"Saco de dormir corazones", price:16990, stock:2, category:"Útiles de cuna e higiene", image:"images/saco-dormir-corazones.jpg" },
+  { id:"pack-panos-gasa", name:"Pack 8 paños de gasa", price:9990, stock:2, category:"Útiles de cuna e higiene", image:"images/pack-panos-gasa.jpg" },
+  { id:"set-cepillo-peine", name:"Set cepillo y peine bebé", price:7990, stock:2, category:"Útiles de cuna e higiene", image:"images/set-cepillo-peine.jpg" },
+  { id:"aspirador-nasal-presion", name:"Aspirador nasal a presión", price:8990, stock:2, category:"Útiles de cuna e higiene", image:"images/aspirador-nasal-presion.jpg" },
+  { id:"cortaunas-electrico", name:"Cortaúñas eléctrico bebé", price:11990, stock:2, category:"Útiles de cuna e higiene", image:"images/cortaunas-electrico.jpg" },
+  { id:"set-patitos-bano", name:"Set patitos de baño", price:6990, stock:2, category:"Útiles de cuna e higiene", image:"images/set-patitos-bano.jpg" },
+  { id:"basurero-panales", name:"Basurero anti-olor para pañales, Bebeconfort", price:29990, stock:2, category:"Útiles de cuna e higiene", image:"images/basurero-panales.jpg" },
+
+  // Accesorios de lactancia materna — precios tomados de MercadoLibre
+  { id:"vasos-leche-materna", name:"Set 4 vasos almacenamiento leche materna, Kido Keep", price:9980, stock:2, category:"Accesorios de lactancia materna", image:"images/vasos-leche-materna.jpg" },
+  { id:"saca-leche-manual", name:"Saca leche manual + par de amapolas o discos", price:11990, stock:2, category:"Accesorios de lactancia materna", image:"images/saca-leche-manual.jpg" },
+  { id:"bolsas-leche-avent", name:"Bolsas esterilizadas para leche, Avent Scf603/25 (pack 25)", price:8790, stock:2, category:"Accesorios de lactancia materna", image:"images/bolsas-leche-avent.jpg" },
+  { id:"extractor-silicona", name:"Extractor recolector de leche materna, silicona manual BPA libre", price:4250, stock:2, category:"Accesorios de lactancia materna", image:"images/extractor-silicona.jpg" },
 ];
 
 /* ================================================================
    Lógica — no necesitas tocar esto
    ================================================================ */
 document.getElementById("hero-names").textContent = CONFIG.names;
-
 const fmt = new Intl.NumberFormat('es-CL', { style:'currency', currency:'CLP', maximumFractionDigits:0 });
 
-let cart = JSON.parse(localStorage.getItem('gemelas-cart') || '{}');
+let cart = {};              // selección local, pendiente de confirmar: {id: qty}
+let claimedData = {};       // {id: cantidadYaReservadaPorTodos} — viene de Firebase
 let activeCategory = "Todo";
+let dbReady = false;
+let db = null;
 
-function saveCart(){ localStorage.setItem('gemelas-cart', JSON.stringify(cart)); }
-
-function categories(){
-  return ["Todo", ...new Set(ITEMS.map(i=>i.category))];
+function banner(msg, show){
+  const b = document.getElementById('statusBanner');
+  b.textContent = msg;
+  b.classList.toggle('show', !!show);
 }
+
+function initFirebase(){
+  if(CONFIG.firebase.apiKey === "PEGA_AQUI"){
+    banner("Falta conectar Firebase — revisa el README para activar el conteo compartido.", true);
+    return;
+  }
+  try{
+    firebase.initializeApp(CONFIG.firebase);
+    db = firebase.database();
+    db.ref('claimed').on('value', snap=>{
+      claimedData = snap.val() || {};
+      dbReady = true;
+      banner('', false);
+      renderGrid();
+    }, err=>{
+      banner("No se pudo conectar con la lista compartida. Intenta recargar la página.", true);
+    });
+    db.ref('claims').limitToLast(20).on('value', snap=>{
+      renderFeed(snap.val() || {});
+    });
+  }catch(e){
+    banner("Hubo un problema conectando Firebase — revisa la configuración en el README.", true);
+  }
+}
+
+function categories(){ return ["Todo", ...new Set(ITEMS.map(i=>i.category))]; }
 
 function renderFilters(){
   const wrap = document.getElementById('filters');
@@ -410,6 +410,11 @@ function renderFilters(){
   });
 }
 
+function remaining(item){
+  const claimed = claimedData[item.id] || 0;
+  return Math.max(0, item.stock - claimed);
+}
+
 function renderGrid(){
   const grid = document.getElementById('grid');
   grid.innerHTML = "";
@@ -419,8 +424,9 @@ function renderGrid(){
     return;
   }
   list.forEach(item=>{
-    const qty = cart[item.id] || 0;
-    const left = item.stock - qty;
+    const left = remaining(item);
+    let qty = cart[item.id] || 0;
+    if(qty > left){ qty = left; if(qty<=0) delete cart[item.id]; else cart[item.id]=qty; }
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
@@ -437,7 +443,7 @@ function renderGrid(){
           <div class="stepper">
             <button data-act="minus" ${qty<=0?'disabled':''}>−</button>
             <span>${qty}</span>
-            <button data-act="plus" ${left<=0?'disabled':''}>+</button>
+            <button data-act="plus" ${qty>=left?'disabled':''}>+</button>
           </div>
           <button class="add-btn ${qty>0?'in-cart':''}" data-act="toggle" ${(qty<=0 && left<=0)?'disabled':''}>
             ${qty>0 ? 'En tu lista' : 'Agregar'}
@@ -452,18 +458,18 @@ function renderGrid(){
     };
     grid.appendChild(card);
   });
+  renderCartBar();
 }
 
 function changeQty(item, delta){
+  const left = remaining(item);
   const current = cart[item.id] || 0;
   let next = current + delta;
   if(next < 0) next = 0;
-  if(next > item.stock) next = item.stock;
+  if(next > left) next = left;
   if(next === 0) delete cart[item.id];
   else cart[item.id] = next;
-  saveCart();
   renderGrid();
-  renderCartBar();
 }
 
 function cartEntries(){
@@ -483,33 +489,115 @@ function renderCartBar(){
   bar.classList.toggle('show', count>0);
 }
 
+function renderFeed(claims){
+  const list = document.getElementById('feedList');
+  const entries = Object.values(claims).sort((a,b)=> (b.ts||0)-(a.ts||0));
+  if(entries.length===0){
+    list.innerHTML = '<li class="empty">Todavía nadie ha confirmado — ¡sé la primera persona!</li>';
+    return;
+  }
+  list.innerHTML = entries.map(c=>{
+    const n = c.itemCount || 0;
+    return `<li><b>${c.name || 'Alguien especial'}</b> confirmó ${n} artículo${n===1?'':'s'} 💛</li>`;
+  }).join('');
+}
+
 function openModal(){
-  const entries = cartEntries();
+  document.getElementById('modalActionsPre').style.display = 'flex';
+  document.getElementById('modalActionsPost').style.display = 'none';
+  document.getElementById('nameField').style.display = 'block';
+  document.getElementById('modalSub').textContent = 'Revisa el resumen y confirma para reservarlo — el cupo se descuenta al instante para todos.';
+  renderModalList(cartEntries());
+  document.getElementById('overlay').classList.add('show');
+}
+
+function renderModalList(entries){
   const list = document.getElementById('modalList');
   list.innerHTML = "";
   let total = 0;
   entries.forEach(e=>{
-    total += e.subtotal;
+    total += e.status==='failed' ? 0 : e.subtotal;
     const li = document.createElement('li');
-    li.innerHTML = `<span class="name">${e.item.name}<span class="sub">${e.qty} × ${fmt.format(e.item.price)}</span></span><span>${fmt.format(e.subtotal)}</span>`;
+    if(e.status==='failed') li.className = 'failed';
+    li.innerHTML = `<span class="name">${e.item.name}<span class="sub">${e.status==='failed' ? 'ya no disponible' : e.qty+' × '+fmt.format(e.item.price)}</span></span><span>${e.status==='failed' ? '—' : fmt.format(e.subtotal)}</span>`;
     list.appendChild(li);
   });
   document.getElementById('modalTotal').textContent = fmt.format(total);
-
-  const lines = entries.map(e=> `• ${e.item.name} x${e.qty} — ${fmt.format(e.subtotal)}`).join('%0A');
-  const text = `¡Hola! Quiero regalarles esto para ${CONFIG.names}:%0A${lines}%0A%0ATotal: ${fmt.format(total)} 💛`;
-  document.getElementById('waBtn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${text}`;
-
-  document.getElementById('overlay').classList.add('show');
+  return total;
 }
 
 document.getElementById('checkoutBtn').onclick = openModal;
 document.getElementById('closeBtn').onclick = ()=> document.getElementById('overlay').classList.remove('show');
 document.getElementById('overlay').onclick = (e)=>{ if(e.target.id==='overlay') e.currentTarget.classList.remove('show'); };
-document.getElementById('copyBtn').onclick = ()=>{
+document.getElementById('doneBtn').onclick = ()=> document.getElementById('overlay').classList.remove('show');
+
+document.getElementById('confirmBtn').onclick = async ()=>{
+  if(!dbReady){ alert('Todavía se está conectando con la lista compartida. Intenta de nuevo en unos segundos.'); return; }
+  const btn = document.getElementById('confirmBtn');
+  btn.disabled = true;
+  btn.textContent = 'Reservando…';
+
+  const guestName = document.getElementById('guestName').value.trim();
   const entries = cartEntries();
-  const total = entries.reduce((s,e)=>s+e.subtotal,0);
-  const text = `Regalo para ${CONFIG.names}:\n` + entries.map(e=>`• ${e.item.name} x${e.qty} — ${fmt.format(e.subtotal)}`).join('\n') + `\n\nTotal: ${fmt.format(total)}`;
+  const results = [];
+
+  for(const e of entries){
+    const ref = db.ref('claimed/' + e.item.id);
+    try{
+      const res = await ref.transaction(current=>{
+        const cur = current || 0;
+        if(cur + e.qty > e.item.stock) return; // aborta: ya no alcanza
+        return cur + e.qty;
+      });
+      results.push({ ...e, status: res.committed ? 'ok' : 'failed' });
+    }catch(err){
+      results.push({ ...e, status: 'failed' });
+    }
+  }
+
+  const ok = results.filter(r=>r.status==='ok');
+  const failed = results.filter(r=>r.status==='failed');
+
+  if(ok.length){
+    db.ref('claims').push({
+      name: guestName || 'Alguien especial',
+      itemCount: ok.reduce((s,e)=>s+e.qty,0),
+      ts: Date.now()
+    });
+  }
+
+  // deja en el carrito solo lo que falló, para que puedan ajustarlo
+  cart = {};
+  failed.forEach(f=> cart[f.item.id] = Math.min(f.qty, remaining(f.item)));
+
+  const total = renderModalList(results);
+  document.getElementById('nameField').style.display = 'none';
+  document.getElementById('modalActionsPre').style.display = 'none';
+
+  if(failed.length){
+    document.getElementById('modalSub').textContent = ok.length
+      ? 'Algunos artículos se agotaron justo antes de confirmar. El resto quedó reservado a tu nombre.'
+      : 'Uf, alguien se adelantó y esos artículos ya se agotaron. Ajusta tu selección e inténtalo de nuevo.';
+  } else {
+    document.getElementById('modalSub').textContent = '¡Listo! Quedó reservado a tu nombre. Gracias por tu cariño 💛';
+  }
+
+  if(ok.length){
+    const lines = ok.map(e=> `• ${e.item.name} x${e.qty} — ${fmt.format(e.subtotal)}`).join('%0A');
+    const text = `¡Hola! Acabo de reservar esto para ${CONFIG.names}:%0A${lines}%0A%0ATotal: ${fmt.format(ok.reduce((s,e)=>s+e.subtotal,0))} 💛`;
+    document.getElementById('waBtn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${text}`;
+    document.getElementById('modalActionsPost').style.display = 'flex';
+  } else {
+    document.getElementById('modalActionsPre').style.display = 'flex';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Confirmar y reservar';
+  renderGrid();
+};
+
+document.getElementById('copyBtn').onclick = ()=>{
+  const text = document.getElementById('modalList').innerText;
   navigator.clipboard.writeText(text).then(()=>{
     const btn = document.getElementById('copyBtn');
     const original = btn.textContent;
@@ -520,7 +608,7 @@ document.getElementById('copyBtn').onclick = ()=>{
 
 renderFilters();
 renderGrid();
-renderCartBar();
+initFirebase();
 </script>
 </body>
 </html>
