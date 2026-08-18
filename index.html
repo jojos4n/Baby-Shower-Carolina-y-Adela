@@ -373,7 +373,15 @@ function banner(msg, show){
 }
 
 function initFirebase(){
-  if(CONFIG.firebase.apiKey === "PEGA_AQUI"){
+  if const firebaseConfig = {
+  apiKey: "AIzaSyCUoyu_89XuzmG0cCOwa1EX_clWfX0nvHQ",
+  authDomain: "baby-shower-c782e.firebaseapp.com",
+  databaseURL: "https://baby-shower-c782e-default-rtdb.firebaseio.com",
+  projectId: "baby-shower-c782e",
+  storageBucket: "baby-shower-c782e.firebasestorage.app",
+  messagingSenderId: "277549077600",
+  appId: "1:277549077600:web:99dcfb5366a0cb91765f05"
+}
     banner("Falta conectar Firebase — revisa el README para activar el conteo compartido.", true);
     return;
   }
