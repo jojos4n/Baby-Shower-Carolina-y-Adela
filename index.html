@@ -176,6 +176,49 @@
   .btn-close{background:transparent;color:#8b8496;padding:8px;}
   .empty-msg{ text-align:center; color:#8b8496; padding:40px 20px; grid-column:1/-1; font-size:14px; }
 
+  /* ---------- DATOS DE TRANSFERENCIA ---------- */
+  .bank-box {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
+  }
+  .bank-box h3 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .bank-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    color: #5A5468;
+  }
+  .bank-row b {
+    color: var(--ink);
+    user-select: all;
+  }
+  .btn-copy-bank {
+    width: 100%;
+    margin-top: 10px;
+    background: var(--paper-2);
+    border: 1px dashed var(--rose-deep);
+    color: var(--rose-deep);
+    font-weight: 600;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    cursor: pointer;
+    font-family: 'Work Sans', sans-serif;
+    transition: background 0.2s ease;
+  }
+  .btn-copy-bank:hover {
+    background: #ecdcc9;
+  }
+
   /* ---------- FEED ---------- */
   .feed{ max-width:640px; margin:0 auto 60px; padding:0 20px; }
   .feed h2{ font-size:18px; text-align:center; margin-bottom:14px; }
@@ -202,7 +245,7 @@
     </svg>
   </div>
   <div class="eyebrow">Baby shower · dos hilos, un mismo cariño</div>
-  <h1>Un regalito para <em id="hero-names">Carolina y Adela </em></h1>
+  <h1>Un regalito para <em id="hero-names">las gemelas</em></h1>
   <p>Elige lo que quieras regalar, la cantidad, y confirma tu selección — así los papás
      saben qué ya está cubierto. El conteo se comparte en tiempo real con todos los
      invitados, así que lo que ves siempre está al día. 💛</p>
@@ -240,9 +283,17 @@
       <button class="btn-confirm" id="confirmBtn">Confirmar y reservar</button>
       <button class="btn-close" id="closeBtn">Seguir eligiendo</button>
     </div>
+
+    <!-- DATOS DE TRANSFERENCIA -->
+    <div class="bank-box" id="bankBox" style="display:none;">
+      <h3>💳 Datos para Transferencia</h3>
+      <div id="bankDetailsList"></div>
+      <button class="btn-copy-bank" id="copyBankBtn" type="button">📋 Copiar datos de transferencia</button>
+    </div>
+
     <div class="modal-actions" id="modalActionsPost" style="display:none;">
-      <a class="btn-whatsapp" id="waBtn" href="#" target="_blank" rel="noopener">Enviar resumen por WhatsApp</a>
-      <button class="btn-copy" id="copyBtn">Copiar resumen</button>
+      <a class="btn-whatsapp" id="waBtn" href="#" target="_blank" rel="noopener">Enviar comprobante por WhatsApp</a>
+      <button class="btn-copy" id="copyBtn">Copiar resumen de compra</button>
       <button class="btn-close" id="doneBtn">Listo</button>
     </div>
   </div>
@@ -258,10 +309,18 @@
    ================================================================ */
 const CONFIG = {
   names: "Carolina y Adela",              // aparece en el título del hero
-  whatsappNumber: "56926459015",     // número de WhatsApp de los papás, formato 569XXXXXXXX
+  whatsappNumber: "56926459015",                        // número de WhatsApp de los papás (ej: 569XXXXXXXX)
 
-  // Pega aquí el objeto de configuración de TU proyecto de Firebase.
-  // Instrucciones paso a paso en el README.md que viene junto a este archivo.
+  // Modifica tus datos bancarios reales aquí:
+  bankDetails: {
+    titular: "Josefa Olea",
+    rut: "21.175.897-k",
+    banco: "Banco Santander",
+    tipoCuenta: "Cuenta Corriente",
+    numeroCuenta: "000093082885",
+    email: "josita.oleas@gmail.com"
+  },
+
   firebase: { 
     apiKey: "AIzaSyCUoyu_89XuzmG0cCOwa1EX_clWfX0nvHQ",
     authDomain: "baby-shower-c782e.firebaseapp.com",
@@ -277,7 +336,7 @@ const CONFIG = {
    2) ARTÍCULOS — agrega, borra o edita libremente.
    ================================================================ */
 const ITEMS = [
-// Bodies 0-1 mes — ajusta precios y stock a gusto
+  // Bodies 0-1 mes
   { id:"body-flores-rosa", name:"Body flores rosa, manga alada", price:5000, stock:2, category:"Bodies 0-1 mes", image:"images/body-flores-rosa.jpg" },
   { id:"body-flores-manga-larga", name:"Body flores, manga larga y cuello bebé", price:7000, stock:1, category:"Bodies 0-1 mes", image:"images/body-flores-manga-larga.jpg" },
   { id:"set-body-cerezas-rosado", name:"Set 2 bodies: cerezas + rosado waffle", price:8000, stock:1, category:"Bodies 0-1 mes", image:"images/set-body-cerezas-rosado.jpg" },
@@ -285,14 +344,14 @@ const ITEMS = [
   { id:"body-flores-silvestres", name:"Body flores silvestres con vincha", price:4800, stock:1, category:"Bodies 0-1 mes", image:"images/body-flores-silvestres.jpg" },
   { id:"pijama-flores-vincha", name:"Pijama flores manga larga con vincha", price:4800, stock:1, category:"Bodies 0-1 mes", image:"images/pijama-flores-vincha.jpg" },
 
-  // Bodies 1-3 meses — ajusta precios y stock a gusto
+  // Bodies 1-3 meses
   { id:"body-flores-colibries", name:"Body flores y colibríes, cuello de encaje", price:4800, stock:2, category:"Bodies 1-3 meses", image:"images/body-flores-colibries.jpg" },
   { id:"body-floral-celeste", name:"Body floral celeste, cuello de encaje", price:5000, stock:1, category:"Bodies 1-3 meses", image:"images/body-floral-celeste.jpg" },
   { id:"body-blanco-lazo-mostaza", name:"Body blanco, lazo mostaza", price:5600, stock:1, category:"Bodies 1-3 meses", image:"images/body-blanco-lazo-mostaza.jpg" },
   { id:"body-crema-cerezas", name:"Body crema, cuello cerezas bordado", price:7000, stock:1, category:"Bodies 1-3 meses", image:"images/body-crema-cerezas.jpg" },
   { id:"body-verde-salvia", name:"Body verde salvia liso, con vincha", price:5200, stock:1, category:"Bodies 1-3 meses", image:"images/body-verde-salvia.jpg" },
 
-  // Bodies 3-6 meses — ajusta precios y stock a gusto
+  // Bodies 3-6 meses
   { id:"set-lunares-rosa", name:"Conjunto lunares rosa: body + pantalón + vincha", price:7000, stock:1, category:"Bodies 3-6 meses", image:"images/set-lunares-rosa.jpg" },
   { id:"set-verde-encaje-floral", name:"Conjunto verde salvia: body encaje + pantalón floral", price:7200, stock:1, category:"Bodies 3-6 meses", image:"images/set-verde-encaje-floral.jpg" },
   { id:"body-tejido-conejo", name:"Body tejido, conejo y flores", price:10000, stock:1, category:"Bodies 3-6 meses", image:"images/body-tejido-conejo.jpg" },
@@ -302,7 +361,7 @@ const ITEMS = [
   { id:"pijama-floral-durazno", name:"Pijama enterizo floral durazno con vincha", price:7200, stock:1, category:"Bodies 3-6 meses", image:"images/pijama-floral-durazno.jpg" },
   { id:"pack-3-bodies-blancos", name:"Pack 3 bodies blancos cruzados", price:10000, stock:2, category:"Bodies 3-6 meses", image:"images/pack-3-bodies-blancos.jpg" },
 
-  // Chalecos 0-6 meses — ajusta precios y stock a gusto
+  // Chalecos 0-6 meses
   { id:"chaleco-blanco-osito", name:"Chaleco tejido blanco, osito", price:6600, stock:1, category:"Chalecos 0-6 meses", image:"images/chaleco-blanco-osito.jpg" },
   { id:"chaleco-blanco-corazones", name:"Chaleco tejido blanco, corazones", price:9400, stock:1, category:"Chalecos 0-6 meses", image:"images/chaleco-blanco-corazones.jpg" },
   { id:"chaleco-beige-flores", name:"Chaleco beige, flores bordadas", price:7500, stock:1, category:"Chalecos 0-6 meses", image:"images/chaleco-beige-flores.jpg" },
@@ -310,7 +369,7 @@ const ITEMS = [
   { id:"chaleco-blanco-lazos", name:"Chaleco blanco, cierre de lazos", price:9000, stock:1, category:"Chalecos 0-6 meses", image:"images/chaleco-blanco-lazos.jpg" },
   { id:"abrigo-rosa-boina", name:"Abrigo rosa con boina a juego", price:7600, stock:2, category:"Chalecos 0-6 meses", image:"images/abrigo-rosa-boina.jpg" },
 
-  // Vestidos 0-6 meses — ajusta precios y stock a gusto
+  // Vestidos 0-6 meses
   { id:"vestido-verde-tul", name:"Vestido verde salvia, falda tul bordada", price:6800, stock:1, category:"Vestidos 0-6 meses", image:"images/vestido-verde-tul.jpg" },
   { id:"vestido-beige-lazo", name:"Vestido beige, lazo y falda tul", price:15990, stock:2, category:"Vestidos 0-6 meses", image:"images/vestido-beige-lazo.jpg" },
   { id:"vestido-burdeo-flores", name:"Vestido burdeo, flores bordadas", price:6600, stock:1, category:"Vestidos 0-6 meses", image:"images/vestido-burdeo-flores.jpg" },
@@ -318,7 +377,7 @@ const ITEMS = [
   { id:"vestido-amarillo-capas", name:"Vestido amarillo, capas y lazo", price:7000, stock:1, category:"Vestidos 0-6 meses", image:"images/vestido-amarillo-capas.jpg" },
   { id:"vestido-celeste-capas", name:"Vestido celeste, capas y lazo", price:7500, stock:1, category:"Vestidos 0-6 meses", image:"images/vestido-celeste-capas.jpg" },
 
-  // Accesorios de vestuario — ajusta precios y stock a gusto
+  // Accesorios de vestuario
   { id:"botitas-tejidas-crema", name:"Botitas tejidas crema", price:3300, stock:2, category:"Accesorios de vestuario", image:"images/botitas-tejidas-crema.jpg" },
   { id:"botitas-tejidas-beige", name:"Botitas tejidas beige", price:3300, stock:2, category:"Accesorios de vestuario", image:"images/botitas-tejidas-beige.jpg" },
   { id:"pack-calcetines-encaje", name:"Pack calcetines de encaje con flores", price:5300, stock:1, category:"Accesorios de vestuario", image:"images/pack-calcetines-encaje.jpg" },
@@ -326,7 +385,7 @@ const ITEMS = [
   { id:"panty-encaje-crema", name:"Panty de encaje crema", price:2200, stock:2, category:"Accesorios de vestuario", image:"images/panty-encaje-crema.jpg" },
   { id:"pack-pantys-lazo", name:"Pack 2 pantys con lazo (blanco y rosa)", price:5000, stock:2, category:"Accesorios de vestuario", image:"images/pack-pantys-lazo.jpg" },
 
-  // Útiles de cuna e higiene — ajusta precios y stock a gusto
+  // Útiles de cuna e higiene
   { id:"pack-mantas-gasa", name:"Pack 3 mantas de gasa de algodón", price:10000, stock:2, category:"Útiles de cuna e higiene", image:"images/pack-mantas-gasa.jpg" },
   { id:"saco-dormir-corazones", name:"Saco de dormir corazones", price:4600, stock:2, category:"Útiles de cuna e higiene", image:"images/saco-dormir-corazones.jpg" },
   { id:"pack-panos-gasa", name:"Pack 8 paños de gasa", price:3000, stock:1, category:"Útiles de cuna e higiene", image:"images/pack-panos-gasa.jpg" },
@@ -336,7 +395,7 @@ const ITEMS = [
   { id:"set-patitos-bano", name:"Set patitos de baño", price:2000, stock:1, category:"Útiles de cuna e higiene", image:"images/set-patitos-bano.jpg" },
   { id:"basurero-panales", name:"Basurero anti-olor para pañales, Bebeconfort", price:10000, stock:4, category:"Útiles de cuna e higiene", image:"images/basurero-panales.jpg" },
 
-  // Accesorios de lactancia materna — precios tomados de MercadoLibre
+  // Accesorios de lactancia materna
   { id:"vasos-leche-materna", name:"Set 4 vasos almacenamiento leche materna, Kido Keep", price:9980, stock:2, category:"Accesorios de lactancia materna", image:"images/vasos-leche-materna.jpg" },
   { id:"saca-leche-manual", name:"Saca leche manual + par de amapolas o discos", price:11990, stock:1, category:"Accesorios de lactancia materna", image:"images/saca-leche-manual.jpg" },
   { id:"bolsas-leche-avent", name:"Bolsas esterilizadas para leche, Avent Scf603/25 (pack 25)", price:8790, stock:1, category:"Accesorios de lactancia materna", image:"images/bolsas-leche-avent.jpg" },
@@ -344,7 +403,7 @@ const ITEMS = [
 ];
 
 /* ================================================================
-   Lógica — no necesitas tocar esto
+   Lógica
    ================================================================ */
 document.getElementById("hero-names").textContent = CONFIG.names;
 const fmt = new Intl.NumberFormat('es-CL', { style:'currency', currency:'CLP', maximumFractionDigits:0 });
@@ -366,24 +425,6 @@ function initFirebase(){
     banner("Falta conectar Firebase — revisa el README para activar el conteo compartido.", true);
     return;
   }
-  try{
-    firebase.initializeApp(CONFIG.firebase);
-    db = firebase.database();
-    db.ref('claimed').on('value', snap=>{
-      claimedData = snap.val() || {};
-      dbReady = true;
-      banner('', false);
-      renderGrid();
-    }, err=>{
-      banner("No se pudo conectar con la lista compartida. Intenta recargar la página.", true);
-    });
-    db.ref('claims').limitToLast(20).on('value', snap=>{
-      renderFeed(snap.val() || {});
-    });
-  }catch(e){
-    banner("Hubo un problema conectando Firebase — revisa la configuración en el README.", true);
-  }
-
   try{
     firebase.initializeApp(CONFIG.firebase);
     db = firebase.database();
@@ -512,6 +553,7 @@ function renderFeed(claims){
 function openModal(){
   document.getElementById('modalActionsPre').style.display = 'flex';
   document.getElementById('modalActionsPost').style.display = 'none';
+  document.getElementById('bankBox').style.display = 'none';
   document.getElementById('nameField').style.display = 'block';
   document.getElementById('modalSub').textContent = 'Revisa el resumen y confirma para reservarlo — el cupo se descuenta al instante para todos.';
   renderModalList(cartEntries());
@@ -586,12 +628,29 @@ document.getElementById('confirmBtn').onclick = async ()=>{
       ? 'Algunos artículos se agotaron justo antes de confirmar. El resto quedó reservado a tu nombre.'
       : 'Uf, alguien se adelantó y esos artículos ya se agotaron. Ajusta tu selección e inténtalo de nuevo.';
   } else {
-    document.getElementById('modalSub').textContent = '¡Listo! Quedó reservado a tu nombre. Gracias por tu cariño 💛';
+    document.getElementById('modalSub').textContent = '¡Listo! Quedó reservado a tu nombre. Realiza la transferencia con los datos a continuación 💛';
   }
 
   if(ok.length){
+    // Renderizamos datos bancarios
+    const b = CONFIG.bankDetails;
+    const totalAmount = ok.reduce((s,e)=>s+e.subtotal,0);
+
+    document.getElementById('bankDetailsList').innerHTML = `
+      <div class="bank-row"><span>Titular:</span> <b>${b.titular}</b></div>
+      <div class="bank-row"><span>RUT:</span> <b>${b.rut}</b></div>
+      <div class="bank-row"><span>Banco:</span> <b>${b.banco}</b></div>
+      <div class="bank-row"><span>Tipo de cuenta:</span> <b>${b.tipoCuenta}</b></div>
+      <div class="bank-row"><span>N° de cuenta:</span> <b>${b.numeroCuenta}</b></div>
+      <div class="bank-row"><span>Correo:</span> <b>${b.email}</b></div>
+      <div class="bank-row" style="margin-top:6px; border-top: 1px dashed var(--line); padding-top:6px;">
+        <span>Monto a transferir:</span> <b style="color:var(--rose-deep); font-size:14px;">${fmt.format(totalAmount)}</b>
+      </div>
+    `;
+    document.getElementById('bankBox').style.display = 'block';
+
     const lines = ok.map(e=> `• ${e.item.name} x${e.qty} — ${fmt.format(e.subtotal)}`).join('%0A');
-    const text = `¡Hola! Acabo de reservar esto para ${CONFIG.names}:%0A${lines}%0A%0ATotal: ${fmt.format(ok.reduce((s,e)=>s+e.subtotal,0))} 💛`;
+    const text = `¡Hola! Acabo de reservar esto para ${CONFIG.names}:%0A${lines}%0A%0ATotal transferido: ${fmt.format(totalAmount)} 💛%0A%0A(Adjunto comprobante)`;
     document.getElementById('waBtn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${text}`;
     document.getElementById('modalActionsPost').style.display = 'flex';
   } else {
@@ -601,6 +660,24 @@ document.getElementById('confirmBtn').onclick = async ()=>{
   btn.disabled = false;
   btn.textContent = 'Confirmar y reservar';
   renderGrid();
+};
+
+document.getElementById('copyBankBtn').onclick = ()=>{
+  const b = CONFIG.bankDetails;
+  const bankText = `Datos para transferencia:
+Titular: ${b.titular}
+RUT: ${b.rut}
+Banco: ${b.banco}
+Tipo: ${b.tipoCuenta}
+N° Cuenta: ${b.numeroCuenta}
+Email: ${b.email}`;
+
+  navigator.clipboard.writeText(bankText).then(()=>{
+    const btn = document.getElementById('copyBankBtn');
+    const original = btn.textContent;
+    btn.textContent = "✅ ¡Datos copiados!";
+    setTimeout(()=> btn.textContent = original, 1500);
+  });
 };
 
 document.getElementById('copyBtn').onclick = ()=>{
