@@ -257,19 +257,19 @@
    1) CONFIGURACIÓN — edita esto con tus datos
    ================================================================ */
 const CONFIG = {
-  names: "las gemelas",              // aparece en el título del hero
-  whatsappNumber: "56900000000",     // número de WhatsApp de los papás, formato 569XXXXXXXX
+  names: "Baby Shower de Carolina y Adela",              // aparece en el título del hero
+  whatsappNumber: "56926459015",     // número de WhatsApp de los papás, formato 569XXXXXXXX
 
   // Pega aquí el objeto de configuración de TU proyecto de Firebase.
   // Instrucciones paso a paso en el README.md que viene junto a este archivo.
-  firebase: {
-    apiKey: "PEGA_AQUI",
-    authDomain: "PEGA_AQUI.firebaseapp.com",
-    databaseURL: "https://PEGA_AQUI-default-rtdb.firebaseio.com",
-    projectId: "PEGA_AQUI",
-    storageBucket: "PEGA_AQUI.appspot.com",
-    messagingSenderId: "PEGA_AQUI",
-    appId: "PEGA_AQUI"
+  firebase: { 
+    apiKey: "AIzaSyCUoyu_89XuzmG0cCOwa1EX_clWfX0nvHQ",
+    authDomain: "baby-shower-c782e.firebaseapp.com",
+    databaseURL: "https://baby-shower-c782e-default-rtdb.firebaseio.com",
+    projectId: "baby-shower-c782e",
+    storageBucket: "baby-shower-c782e.firebasestorage.app",
+    messagingSenderId: "277549077600",
+    appId: "1:277549077600:web:99dcfb5366a0cb91765f05"
   }
 };
 
@@ -277,81 +277,70 @@ const CONFIG = {
    2) ARTÍCULOS — agrega, borra o edita libremente.
    ================================================================ */
 const ITEMS = [
-  { id:"panales-rn", name:"Pack pañales talla RN", price:9990, stock:6, category:"Higiene", image:"images/panales.jpg" },
-  { id:"toallitas", name:"Toallitas húmedas (pack x3)", price:6990, stock:8, category:"Higiene", image:"images/toallitas.jpg" },
-  { id:"body-ml", name:"Body manga larga (par)", price:12990, stock:10, category:"Ropa", image:"images/body.jpg" },
-  { id:"mamadera", name:"Mamadera anti-cólico", price:8990, stock:6, category:"Alimentación", image:"images/mamadera.jpg" },
-  { id:"chupetes", name:"Set de chupetes", price:5990, stock:10, category:"Alimentación", image:"images/chupetes.jpg" },
-  { id:"mantita", name:"Mantita de algodón", price:14990, stock:6, category:"Cuna", image:"images/mantita.jpg" },
-  { id:"termometro", name:"Termómetro digital", price:9990, stock:2, category:"Higiene", image:"images/termometro.jpg" },
-  { id:"aspirador", name:"Aspirador nasal", price:7990, stock:4, category:"Higiene", image:"images/aspirador.jpg" },
-  { id:"set-bano", name:"Set de baño (esponja + toalla capucha)", price:15990, stock:6, category:"Higiene", image:"images/setbano.jpg" },
-  { id:"sabanas", name:"Sábanas para cuna (par)", price:17990, stock:4, category:"Cuna", image:"images/sabanas.jpg" },
-
-  // Bodies 0-1 mes — ajusta precios y stock a gusto
-  { id:"body-flores-rosa", name:"Body flores rosa, manga alada", price:9990, stock:2, category:"Bodies 0-1 mes", image:"images/body-flores-rosa.jpg" },
-  { id:"body-flores-manga-larga", name:"Body flores, manga larga y cuello bebé", price:11990, stock:2, category:"Bodies 0-1 mes", image:"images/body-flores-manga-larga.jpg" },
-  { id:"set-body-cerezas-rosado", name:"Set 2 bodies: cerezas + rosado waffle", price:13990, stock:2, category:"Bodies 0-1 mes", image:"images/set-body-cerezas-rosado.jpg" },
-  { id:"body-naranjas", name:"Body naranjas con vincha a juego", price:10990, stock:2, category:"Bodies 0-1 mes", image:"images/body-naranjas.jpg" },
-  { id:"body-flores-silvestres", name:"Body flores silvestres con vincha", price:10990, stock:2, category:"Bodies 0-1 mes", image:"images/body-flores-silvestres.jpg" },
-  { id:"pijama-flores-vincha", name:"Pijama flores manga larga con vincha", price:12990, stock:2, category:"Bodies 0-1 mes", image:"images/pijama-flores-vincha.jpg" },
+// Bodies 0-1 mes — ajusta precios y stock a gusto
+  { id:"body-flores-rosa", name:"Body flores rosa, manga alada", price:5000, stock:2, category:"Bodies 0-1 mes", image:"images/body-flores-rosa.jpg" },
+  { id:"body-flores-manga-larga", name:"Body flores, manga larga y cuello bebé", price:7000, stock:1, category:"Bodies 0-1 mes", image:"images/body-flores-manga-larga.jpg" },
+  { id:"set-body-cerezas-rosado", name:"Set 2 bodies: cerezas + rosado waffle", price:8000, stock:1, category:"Bodies 0-1 mes", image:"images/set-body-cerezas-rosado.jpg" },
+  { id:"body-naranjas", name:"Body naranjas con vincha a juego", price:5000, stock:1, category:"Bodies 0-1 mes", image:"images/body-naranjas.jpg" },
+  { id:"body-flores-silvestres", name:"Body flores silvestres con vincha", price:4800, stock:1, category:"Bodies 0-1 mes", image:"images/body-flores-silvestres.jpg" },
+  { id:"pijama-flores-vincha", name:"Pijama flores manga larga con vincha", price:4800, stock:1, category:"Bodies 0-1 mes", image:"images/pijama-flores-vincha.jpg" },
 
   // Bodies 1-3 meses — ajusta precios y stock a gusto
-  { id:"body-flores-colibries", name:"Body flores y colibríes, cuello de encaje", price:13990, stock:2, category:"Bodies 1-3 meses", image:"images/body-flores-colibries.jpg" },
-  { id:"body-floral-celeste", name:"Body floral celeste, cuello de encaje", price:13990, stock:2, category:"Bodies 1-3 meses", image:"images/body-floral-celeste.jpg" },
-  { id:"body-blanco-lazo-mostaza", name:"Body blanco, lazo mostaza", price:11990, stock:2, category:"Bodies 1-3 meses", image:"images/body-blanco-lazo-mostaza.jpg" },
-  { id:"body-crema-cerezas", name:"Body crema, cuello cerezas bordado", price:12990, stock:2, category:"Bodies 1-3 meses", image:"images/body-crema-cerezas.jpg" },
-  { id:"body-verde-salvia", name:"Body verde salvia liso, con vincha", price:11990, stock:2, category:"Bodies 1-3 meses", image:"images/body-verde-salvia.jpg" },
+  { id:"body-flores-colibries", name:"Body flores y colibríes, cuello de encaje", price:4800, stock:2, category:"Bodies 1-3 meses", image:"images/body-flores-colibries.jpg" },
+  { id:"body-floral-celeste", name:"Body floral celeste, cuello de encaje", price:5000, stock:1, category:"Bodies 1-3 meses", image:"images/body-floral-celeste.jpg" },
+  { id:"body-blanco-lazo-mostaza", name:"Body blanco, lazo mostaza", price:5600, stock:1, category:"Bodies 1-3 meses", image:"images/body-blanco-lazo-mostaza.jpg" },
+  { id:"body-crema-cerezas", name:"Body crema, cuello cerezas bordado", price:7000, stock:1, category:"Bodies 1-3 meses", image:"images/body-crema-cerezas.jpg" },
+  { id:"body-verde-salvia", name:"Body verde salvia liso, con vincha", price:5200, stock:1, category:"Bodies 1-3 meses", image:"images/body-verde-salvia.jpg" },
 
   // Bodies 3-6 meses — ajusta precios y stock a gusto
-  { id:"set-lunares-rosa", name:"Conjunto lunares rosa: body + pantalón + vincha", price:15990, stock:2, category:"Bodies 3-6 meses", image:"images/set-lunares-rosa.jpg" },
-  { id:"set-verde-encaje-floral", name:"Conjunto verde salvia: body encaje + pantalón floral", price:15990, stock:2, category:"Bodies 3-6 meses", image:"images/set-verde-encaje-floral.jpg" },
-  { id:"body-tejido-conejo", name:"Body tejido, conejo y flores", price:14990, stock:2, category:"Bodies 3-6 meses", image:"images/body-tejido-conejo.jpg" },
-  { id:"body-tejido-lila", name:"Body tejido lila, cuello de encaje", price:14990, stock:2, category:"Bodies 3-6 meses", image:"images/body-tejido-lila.jpg" },
-  { id:"body-tejido-verde-flores", name:"Body tejido verde, flores blancas", price:13990, stock:2, category:"Bodies 3-6 meses", image:"images/body-tejido-verde-flores.jpg" },
-  { id:"body-flores-cuello-grande", name:"Body flores, cuello grande bordado", price:13990, stock:2, category:"Bodies 3-6 meses", image:"images/body-flores-cuello-grande.jpg" },
-  { id:"pijama-floral-durazno", name:"Pijama enterizo floral durazno con vincha", price:14990, stock:2, category:"Bodies 3-6 meses", image:"images/pijama-floral-durazno.jpg" },
-  { id:"pack-3-bodies-blancos", name:"Pack 3 bodies blancos cruzados", price:12990, stock:2, category:"Bodies 3-6 meses", image:"images/pack-3-bodies-blancos.jpg" },
+  { id:"set-lunares-rosa", name:"Conjunto lunares rosa: body + pantalón + vincha", price:7000, stock:1, category:"Bodies 3-6 meses", image:"images/set-lunares-rosa.jpg" },
+  { id:"set-verde-encaje-floral", name:"Conjunto verde salvia: body encaje + pantalón floral", price:7200, stock:1, category:"Bodies 3-6 meses", image:"images/set-verde-encaje-floral.jpg" },
+  { id:"body-tejido-conejo", name:"Body tejido, conejo y flores", price:10000, stock:1, category:"Bodies 3-6 meses", image:"images/body-tejido-conejo.jpg" },
+  { id:"body-tejido-lila", name:"Body tejido lila, cuello de encaje", price:9200, stock:1, category:"Bodies 3-6 meses", image:"images/body-tejido-lila.jpg" },
+  { id:"body-tejido-verde-flores", name:"Body tejido verde, flores blancas", price:9000, stock:1, category:"Bodies 3-6 meses", image:"images/body-tejido-verde-flores.jpg" },
+  { id:"body-flores-cuello-grande", name:"Body flores, cuello grande bordado", price:8700, stock:1, category:"Bodies 3-6 meses", image:"images/body-flores-cuello-grande.jpg" },
+  { id:"pijama-floral-durazno", name:"Pijama enterizo floral durazno con vincha", price:7200, stock:1, category:"Bodies 3-6 meses", image:"images/pijama-floral-durazno.jpg" },
+  { id:"pack-3-bodies-blancos", name:"Pack 3 bodies blancos cruzados", price:10000, stock:2, category:"Bodies 3-6 meses", image:"images/pack-3-bodies-blancos.jpg" },
 
   // Chalecos 0-6 meses — ajusta precios y stock a gusto
-  { id:"chaleco-blanco-osito", name:"Chaleco tejido blanco, osito", price:12990, stock:2, category:"Chalecos 0-6 meses", image:"images/chaleco-blanco-osito.jpg" },
-  { id:"chaleco-blanco-corazones", name:"Chaleco tejido blanco, corazones", price:12990, stock:2, category:"Chalecos 0-6 meses", image:"images/chaleco-blanco-corazones.jpg" },
-  { id:"chaleco-beige-flores", name:"Chaleco beige, flores bordadas", price:13990, stock:2, category:"Chalecos 0-6 meses", image:"images/chaleco-beige-flores.jpg" },
-  { id:"chaleco-verde-flores", name:"Chaleco verde salvia, flores bordadas", price:13990, stock:2, category:"Chalecos 0-6 meses", image:"images/chaleco-verde-flores.jpg" },
-  { id:"chaleco-blanco-lazos", name:"Chaleco blanco, cierre de lazos", price:12990, stock:2, category:"Chalecos 0-6 meses", image:"images/chaleco-blanco-lazos.jpg" },
-  { id:"abrigo-rosa-boina", name:"Abrigo rosa con boina a juego", price:18990, stock:2, category:"Chalecos 0-6 meses", image:"images/abrigo-rosa-boina.jpg" },
+  { id:"chaleco-blanco-osito", name:"Chaleco tejido blanco, osito", price:6600, stock:1, category:"Chalecos 0-6 meses", image:"images/chaleco-blanco-osito.jpg" },
+  { id:"chaleco-blanco-corazones", name:"Chaleco tejido blanco, corazones", price:9400, stock:1, category:"Chalecos 0-6 meses", image:"images/chaleco-blanco-corazones.jpg" },
+  { id:"chaleco-beige-flores", name:"Chaleco beige, flores bordadas", price:7500, stock:1, category:"Chalecos 0-6 meses", image:"images/chaleco-beige-flores.jpg" },
+  { id:"chaleco-verde-flores", name:"Chaleco verde salvia, flores bordadas", price:7500, stock:1, category:"Chalecos 0-6 meses", image:"images/chaleco-verde-flores.jpg" },
+  { id:"chaleco-blanco-lazos", name:"Chaleco blanco, cierre de lazos", price:9000, stock:1, category:"Chalecos 0-6 meses", image:"images/chaleco-blanco-lazos.jpg" },
+  { id:"abrigo-rosa-boina", name:"Abrigo rosa con boina a juego", price:7600, stock:2, category:"Chalecos 0-6 meses", image:"images/abrigo-rosa-boina.jpg" },
 
   // Vestidos 0-6 meses — ajusta precios y stock a gusto
-  { id:"vestido-verde-tul", name:"Vestido verde salvia, falda tul bordada", price:15990, stock:2, category:"Vestidos 0-6 meses", image:"images/vestido-verde-tul.jpg" },
+  { id:"vestido-verde-tul", name:"Vestido verde salvia, falda tul bordada", price:6800, stock:1, category:"Vestidos 0-6 meses", image:"images/vestido-verde-tul.jpg" },
   { id:"vestido-beige-lazo", name:"Vestido beige, lazo y falda tul", price:15990, stock:2, category:"Vestidos 0-6 meses", image:"images/vestido-beige-lazo.jpg" },
-  { id:"vestido-burdeo-flores", name:"Vestido burdeo, flores bordadas", price:16990, stock:2, category:"Vestidos 0-6 meses", image:"images/vestido-burdeo-flores.jpg" },
-  { id:"vestido-verde-botella-flores", name:"Vestido verde botella, flores bordadas", price:16990, stock:2, category:"Vestidos 0-6 meses", image:"images/vestido-verde-botella-flores.jpg" },
-  { id:"vestido-amarillo-capas", name:"Vestido amarillo, capas y lazo", price:14990, stock:2, category:"Vestidos 0-6 meses", image:"images/vestido-amarillo-capas.jpg" },
-  { id:"vestido-celeste-capas", name:"Vestido celeste, capas y lazo", price:14990, stock:2, category:"Vestidos 0-6 meses", image:"images/vestido-celeste-capas.jpg" },
+  { id:"vestido-burdeo-flores", name:"Vestido burdeo, flores bordadas", price:6600, stock:1, category:"Vestidos 0-6 meses", image:"images/vestido-burdeo-flores.jpg" },
+  { id:"vestido-verde-botella-flores", name:"Vestido verde botella, flores bordadas", price:7000, stock:1, category:"Vestidos 0-6 meses", image:"images/vestido-verde-botella-flores.jpg" },
+  { id:"vestido-amarillo-capas", name:"Vestido amarillo, capas y lazo", price:7000, stock:1, category:"Vestidos 0-6 meses", image:"images/vestido-amarillo-capas.jpg" },
+  { id:"vestido-celeste-capas", name:"Vestido celeste, capas y lazo", price:7500, stock:1, category:"Vestidos 0-6 meses", image:"images/vestido-celeste-capas.jpg" },
 
   // Accesorios de vestuario — ajusta precios y stock a gusto
-  { id:"botitas-tejidas-crema", name:"Botitas tejidas crema", price:8990, stock:2, category:"Accesorios de vestuario", image:"images/botitas-tejidas-crema.jpg" },
-  { id:"botitas-tejidas-beige", name:"Botitas tejidas beige", price:8990, stock:2, category:"Accesorios de vestuario", image:"images/botitas-tejidas-beige.jpg" },
-  { id:"pack-calcetines-encaje", name:"Pack calcetines de encaje con flores", price:7990, stock:2, category:"Accesorios de vestuario", image:"images/pack-calcetines-encaje.jpg" },
-  { id:"sombrero-blanco-bordado", name:"Sombrero blanco bordado", price:9990, stock:2, category:"Accesorios de vestuario", image:"images/sombrero-blanco-bordado.jpg" },
-  { id:"panty-encaje-crema", name:"Panty de encaje crema", price:8990, stock:2, category:"Accesorios de vestuario", image:"images/panty-encaje-crema.jpg" },
-  { id:"pack-pantys-lazo", name:"Pack 2 pantys con lazo (blanco y rosa)", price:9990, stock:2, category:"Accesorios de vestuario", image:"images/pack-pantys-lazo.jpg" },
+  { id:"botitas-tejidas-crema", name:"Botitas tejidas crema", price:3300, stock:2, category:"Accesorios de vestuario", image:"images/botitas-tejidas-crema.jpg" },
+  { id:"botitas-tejidas-beige", name:"Botitas tejidas beige", price:3300, stock:2, category:"Accesorios de vestuario", image:"images/botitas-tejidas-beige.jpg" },
+  { id:"pack-calcetines-encaje", name:"Pack calcetines de encaje con flores", price:5300, stock:1, category:"Accesorios de vestuario", image:"images/pack-calcetines-encaje.jpg" },
+  { id:"sombrero-blanco-bordado", name:"Sombrero blanco bordado", price:3200, stock:2, category:"Accesorios de vestuario", image:"images/sombrero-blanco-bordado.jpg" },
+  { id:"panty-encaje-crema", name:"Panty de encaje crema", price:2200, stock:2, category:"Accesorios de vestuario", image:"images/panty-encaje-crema.jpg" },
+  { id:"pack-pantys-lazo", name:"Pack 2 pantys con lazo (blanco y rosa)", price:5000, stock:2, category:"Accesorios de vestuario", image:"images/pack-pantys-lazo.jpg" },
 
   // Útiles de cuna e higiene — ajusta precios y stock a gusto
-  { id:"pack-mantas-gasa", name:"Pack 3 mantas de gasa de algodón", price:14990, stock:2, category:"Útiles de cuna e higiene", image:"images/pack-mantas-gasa.jpg" },
-  { id:"saco-dormir-corazones", name:"Saco de dormir corazones", price:16990, stock:2, category:"Útiles de cuna e higiene", image:"images/saco-dormir-corazones.jpg" },
-  { id:"pack-panos-gasa", name:"Pack 8 paños de gasa", price:9990, stock:2, category:"Útiles de cuna e higiene", image:"images/pack-panos-gasa.jpg" },
-  { id:"set-cepillo-peine", name:"Set cepillo y peine bebé", price:7990, stock:2, category:"Útiles de cuna e higiene", image:"images/set-cepillo-peine.jpg" },
-  { id:"aspirador-nasal-presion", name:"Aspirador nasal a presión", price:8990, stock:2, category:"Útiles de cuna e higiene", image:"images/aspirador-nasal-presion.jpg" },
-  { id:"cortaunas-electrico", name:"Cortaúñas eléctrico bebé", price:11990, stock:2, category:"Útiles de cuna e higiene", image:"images/cortaunas-electrico.jpg" },
-  { id:"set-patitos-bano", name:"Set patitos de baño", price:6990, stock:2, category:"Útiles de cuna e higiene", image:"images/set-patitos-bano.jpg" },
-  { id:"basurero-panales", name:"Basurero anti-olor para pañales, Bebeconfort", price:29990, stock:2, category:"Útiles de cuna e higiene", image:"images/basurero-panales.jpg" },
+  { id:"pack-mantas-gasa", name:"Pack 3 mantas de gasa de algodón", price:10000, stock:2, category:"Útiles de cuna e higiene", image:"images/pack-mantas-gasa.jpg" },
+  { id:"saco-dormir-corazones", name:"Saco de dormir corazones", price:4600, stock:2, category:"Útiles de cuna e higiene", image:"images/saco-dormir-corazones.jpg" },
+  { id:"pack-panos-gasa", name:"Pack 8 paños de gasa", price:3000, stock:1, category:"Útiles de cuna e higiene", image:"images/pack-panos-gasa.jpg" },
+  { id:"set-cepillo-peine", name:"Set cepillo y peine bebé", price:2900, stock:1, category:"Útiles de cuna e higiene", image:"images/set-cepillo-peine.jpg" },
+  { id:"aspirador-nasal-presion", name:"Aspirador nasal a presión", price:3000, stock:2, category:"Útiles de cuna e higiene", image:"images/aspirador-nasal-presion.jpg" },
+  { id:"cortaunas-electrico", name:"Cortaúñas eléctrico bebé", price:3000, stock:1, category:"Útiles de cuna e higiene", image:"images/cortaunas-electrico.jpg" },
+  { id:"set-patitos-bano", name:"Set patitos de baño", price:2000, stock:1, category:"Útiles de cuna e higiene", image:"images/set-patitos-bano.jpg" },
+  { id:"basurero-panales", name:"Basurero anti-olor para pañales, Bebeconfort", cuota:10000, stock:4, category:"Útiles de cuna e higiene", image:"images/basurero-panales.jpg" },
 
   // Accesorios de lactancia materna — precios tomados de MercadoLibre
   { id:"vasos-leche-materna", name:"Set 4 vasos almacenamiento leche materna, Kido Keep", price:9980, stock:2, category:"Accesorios de lactancia materna", image:"images/vasos-leche-materna.jpg" },
-  { id:"saca-leche-manual", name:"Saca leche manual + par de amapolas o discos", price:11990, stock:2, category:"Accesorios de lactancia materna", image:"images/saca-leche-manual.jpg" },
-  { id:"bolsas-leche-avent", name:"Bolsas esterilizadas para leche, Avent Scf603/25 (pack 25)", price:8790, stock:2, category:"Accesorios de lactancia materna", image:"images/bolsas-leche-avent.jpg" },
-  { id:"extractor-silicona", name:"Extractor recolector de leche materna, silicona manual BPA libre", price:4250, stock:2, category:"Accesorios de lactancia materna", image:"images/extractor-silicona.jpg" },
+  { id:"saca-leche-manual", name:"Saca leche manual + par de amapolas o discos", price:11990, stock:1, category:"Accesorios de lactancia materna", image:"images/saca-leche-manual.jpg" },
+  { id:"bolsas-leche-avent", name:"Bolsas esterilizadas para leche, Avent Scf603/25 (pack 25)", price:8790, stock:1, category:"Accesorios de lactancia materna", image:"images/bolsas-leche-avent.jpg" },
+  { id:"extractor-silicona", name:"Extractor recolector de leche materna, silicona manual BPA libre", price:4250, stock:1, category:"Accesorios de lactancia materna", image:"images/extractor-silicona.jpg" },
 ];
 
 /* ================================================================
