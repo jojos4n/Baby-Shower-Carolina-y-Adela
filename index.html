@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de regalos · Gemelas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============ CONFIGURA AQUÍ LOS NOMBRES Y EL WHATSAPP ============ */
+  :root{
+    --ink:#2E2A3D;
+    --paper:#FBF5EC;
+    --paper-2:#F3ECDF;
+    --rose:#D98C8C;
+    --rose-deep:#B85F6B;
+    --gold:#C9A24B;
+    --line: rgba(46,42,61,0.14);
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,.display{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:64px 20px 40px;
+    text-align:center;
+    overflow:hidden;
+    background:linear-gradient(180deg, var(--paper) 0%, var(--paper) 70%, var(--paper-2) 100%);
+  }
+  .ribbon-wrap{
+    width:min(320px, 70vw);
+    margin:0 auto 18px;
+  }
+  .ribbon-wrap svg{width:100%;height:auto;display:block;}
+  .ribbon-a, .ribbon-b{
+    fill:none;
+    stroke-width:6;
+    stroke-linecap:round;
+    stroke-dasharray:600;
+    stroke-dashoffset:600;
+    animation:draw 1.6s ease forwards;
+  }
+  .ribbon-a{stroke:var(--rose);}
+  .ribbon-b{stroke:var(--gold); animation-delay:.25s;}
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @media (prefers-reduced-motion: reduce){
+    .ribbon-a,.ribbon-b{animation:none; stroke-dashoffset:0;}
+  }
+  .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    font-size:12px;
+    color:var(--rose-deep);
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  .hero h1{
+    font-size:clamp(30px,6vw,46px);
+    margin:0 0 12px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--rose-deep);
+  }
+  .hero p{
+    max-width:520px;
+    margin:0 auto;
+    color:#5A5468;
+    font-size:15.5px;
+    line-height:1.55;
+  }
+
+  /* ---------- FILTERS ---------- */
+  .filters{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:center;
+    padding:22px 20px 6px;
+    max-width:960px;
+    margin:0 auto;
+  }
+  .filter-btn{
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--ink);
+    padding:7px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-family:'Work Sans',sans-serif;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .filter-btn:hover{border-color:var(--rose-deep);}
+  .filter-btn.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+
+  /* ---------- GRID ---------- */
+  .grid{
+    max-width:960px;
+    margin:18px auto 140px;
+    padding:0 20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(210px,1fr));
+    gap:18px;
+  }
+  .card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .card-img{
+    width:100%;
+    aspect-ratio:1/1;
+    background:linear-gradient(135deg, var(--paper-2), #fff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .card-img img{width:100%;height:100%;object-fit:cover;display:block;}
+  .card-img .placeholder{
+    font-family:'Fraunces',serif;
+    font-size:34px;
+    color:var(--rose-deep);
+    opacity:.55;
+  }
+  .card-body{
+    padding:12px 14px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    flex:1;
+  }
+  .card-name{font-size:14.5px;font-weight:600;line-height:1.3;}
+  .card-stock{font-size:11.5px;color:#8b8496;}
+  .card-stock.low{color:var(--rose-deep);}
+  .card-price{
+    font-family:'Fraunces',serif;
+    font-size:19px;
+    color:var(--rose-deep);
+    margin-top:2px;
+  }
+  .qty-row{
+    margin-top:auto;
+    padding-top:8px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+  }
+  .stepper{
+    display:flex;
+    align-items:center;
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .stepper button{
+    width:30px;height:30px;
+    border:none;
+    background:var(--paper-2);
+    color:var(--ink);
+    font-size:16px;
+    cursor:pointer;
+  }
+  .stepper button:disabled{opacity:.35;cursor:not-allowed;}
+  .stepper span{
+    width:28px;
+    text-align:center;
+    font-size:14px;
+  }
+  .add-btn{
+    flex:1;
+    border:none;
+    background:var(--ink);
+    color:var(--paper);
+    padding:8px 10px;
+    border-radius:8px;
+    font-size:13px;
+    cursor:pointer;
+    font-family:'Work Sans',sans-serif;
+    transition:opacity .15s;
+  }
+  .add-btn:disabled{background:#cfc9d6;cursor:not-allowed;}
+  .add-btn.in-cart{background:var(--rose-deep);}
+
+  /* ---------- STICKY CART BAR ---------- */
+  .cart-bar{
+    position:fixed;
+    left:0;right:0;bottom:0;
+    background:var(--ink);
+    color:var(--paper);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    transform:translateY(110%);
+    transition:transform .3s ease;
+    z-index:50;
+  }
+  .cart-bar.show{transform:translateY(0);}
+  .cart-bar .info{font-size:13.5px;color:#D8D2E6;}
+  .cart-bar .total{
+    font-family:'Fraunces',serif;
+    font-size:20px;
+    color:#fff;
+  }
+  .cart-bar button{
+    background:var(--rose);
+    color:var(--ink);
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:'Work Sans',sans-serif;
+    white-space:nowrap;
+  }
+
+  /* ---------- MODAL ---------- */
+  .overlay{
+    position:fixed;inset:0;
+    background:rgba(46,42,61,0.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:100;
+  }
+  .overlay.show{display:flex;}
+  .modal{
+    background:var(--paper);
+    border-radius:16px;
+    max-width:440px;
+    width:100%;
+    max-height:82vh;
+    overflow-y:auto;
+    padding:26px 24px 22px;
+  }
+  .modal h2{font-size:22px;margin:0 0 4px;}
+  .modal p.sub{font-size:13.5px;color:#5A5468;margin:0 0 16px;}
+  .modal-list{list-style:none;margin:0 0 14px;padding:0;border-top:1px solid var(--line);}
+  .modal-list li{
+    display:flex;justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid var(--line);
+    font-size:13.5px;
+  }
+  .modal-list li span.name{color:var(--ink);}
+  .modal-list li span.sub{color:#8b8496;font-size:12px;display:block;}
+  .modal-total{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding-top:6px;margin-bottom:20px;
+  }
+  .modal-total .label{font-size:13px;color:#5A5468;}
+  .modal-total .amount{font-family:'Fraunces',serif;font-size:26px;color:var(--rose-deep);}
+  .modal-actions{display:flex;flex-direction:column;gap:9px;}
+  .modal-actions button, .modal-actions a{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    padding:12px;
+    border-radius:9px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    border:none;
+    font-family:'Work Sans',sans-serif;
+  }
+  .btn-whatsapp{background:#3E8F5B;color:#fff;}
+  .btn-copy{background:#fff;color:var(--ink);border:1px solid var(--line) !important;}
+  .btn-close{background:transparent;color:#8b8496;padding:8px;}
+  .empty-msg{
+    text-align:center;
+    color:#8b8496;
+    padding:40px 20px;
+    grid-column:1/-1;
+    font-size:14px;
+  }
+  .thanks{
+    text-align:center;
+    padding:6px 0 22px;
+    color:#8b8496;
+    font-size:12.5px;
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="ribbon-wrap">
+    <svg viewBox="0 0 300 90" fill="none">
+      <path class="ribbon-a" d="M10,45 C60,5 100,85 150,45 C200,5 240,85 290,45"/>
+      <path class="ribbon-b" d="M10,45 C60,85 100,5 150,45 C200,85 240,5 290,45"/>
+    </svg>
+  </div>
+  <div class="eyebrow">Baby shower · dos hilos, un mismo cariño</div>
+  <h1>Un regalito para <em id="hero-names">las gemelas</em></h1>
+  <p>Elige lo que quieras regalar, la cantidad, y confirma tu selección — así los papás
+     saben qué ya está cubierto. Nada se cobra de verdad, es una forma simbólica de
+     armar la lista juntos. 💛</p>
+</section>
+
+<div class="filters" id="filters"></div>
+
+<div class="grid" id="grid"></div>
+
+<div class="cart-bar" id="cartBar">
+  <div class="info" id="cartInfo">0 artículos</div>
+  <div class="total" id="cartTotal">$0</div>
+  <button id="checkoutBtn">Ver mi selección</button>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h2>Tu selección</h2>
+    <p class="sub">Revisa el resumen antes de "confirmar el pago" simbólico.</p>
+    <ul class="modal-list" id="modalList"></ul>
+    <div class="modal-total">
+      <span class="label">Total</span>
+      <span class="amount" id="modalTotal">$0</span>
+    </div>
+    <div class="modal-actions">
+      <a class="btn-whatsapp" id="waBtn" href="#" target="_blank" rel="noopener">Enviar resumen por WhatsApp</a>
+      <button class="btn-copy" id="copyBtn">Copiar resumen</button>
+      <button class="btn-close" id="closeBtn">Seguir eligiendo</button>
+    </div>
+  </div>
+</div>
+
+<p class="thanks">Gracias por acompañarnos en esta espera ✨</p>
+
+<script>
+/* ================================================================
+   1) CONFIGURACIÓN — edita esto con tus datos
+   ================================================================ */
+const CONFIG = {
+  names: "las gemelas",              // aparece en el título del hero
+  whatsappNumber: "56900000000",     // número de los papás, formato 569XXXXXXXX, sin +
+};
+
+/* ================================================================
+   2) ARTÍCULOS — agrega, borra o edita libremente.
+      "image": ruta relativa a una carpeta "images/" que tú creas
+      en el mismo repositorio (ver README). Si la imagen no existe
+      o no la has subido aún, se muestra un ícono de reemplazo.
+      "stock": cuántas unidades de ese regalo se pueden "tomar".
+   ================================================================ */
+const ITEMS = [
+  { id:"panales-rn", name:"Pack pañales talla RN", price:9990, stock:6, category:"Higiene", image:"images/panales.jpg" },
+  { id:"toallitas", name:"Toallitas húmedas (pack x3)", price:6990, stock:8, category:"Higiene", image:"images/toallitas.jpg" },
+  { id:"body-ml", name:"Body manga larga (par)", price:12990, stock:10, category:"Ropa", image:"images/body.jpg" },
+  { id:"mamadera", name:"Mamadera anti-cólico", price:8990, stock:6, category:"Alimentación", image:"images/mamadera.jpg" },
+  { id:"chupetes", name:"Set de chupetes", price:5990, stock:10, category:"Alimentación", image:"images/chupetes.jpg" },
+  { id:"mantita", name:"Mantita de algodón", price:14990, stock:6, category:"Cuna", image:"images/mantita.jpg" },
+  { id:"termometro", name:"Termómetro digital", price:9990, stock:2, category:"Higiene", image:"images/termometro.jpg" },
+  { id:"aspirador", name:"Aspirador nasal", price:7990, stock:4, category:"Higiene", image:"images/aspirador.jpg" },
+  { id:"set-bano", name:"Set de baño (esponja + toalla capucha)", price:15990, stock:6, category:"Higiene", image:"images/setbano.jpg" },
+  { id:"sabanas", name:"Sábanas para cuna (par)", price:17990, stock:4, category:"Cuna", image:"images/sabanas.jpg" },
+];
+
+/* ================================================================
+   Lógica — no necesitas tocar esto
+   ================================================================ */
+document.getElementById("hero-names").textContent = CONFIG.names;
+
+const fmt = new Intl.NumberFormat('es-CL', { style:'currency', currency:'CLP', maximumFractionDigits:0 });
+
+let cart = JSON.parse(localStorage.getItem('gemelas-cart') || '{}');
+let activeCategory = "Todo";
+
+function saveCart(){ localStorage.setItem('gemelas-cart', JSON.stringify(cart)); }
+
+function categories(){
+  return ["Todo", ...new Set(ITEMS.map(i=>i.category))];
+}
+
+function renderFilters(){
+  const wrap = document.getElementById('filters');
+  wrap.innerHTML = "";
+  categories().forEach(cat=>{
+    const b = document.createElement('button');
+    b.className = 'filter-btn' + (cat===activeCategory ? ' active' : '');
+    b.textContent = cat;
+    b.onclick = ()=>{ activeCategory = cat; renderFilters(); renderGrid(); };
+    wrap.appendChild(b);
+  });
+}
+
+function renderGrid(){
+  const grid = document.getElementById('grid');
+  grid.innerHTML = "";
+  const list = ITEMS.filter(i => activeCategory==="Todo" || i.category===activeCategory);
+  if(list.length===0){
+    grid.innerHTML = '<div class="empty-msg">No hay artículos en esta categoría todavía.</div>';
+    return;
+  }
+  list.forEach(item=>{
+    const qty = cart[item.id] || 0;
+    const left = item.stock - qty;
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-img">
+        <img src="${item.image}" alt="${item.name}"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="placeholder" style="display:none;">${item.name.charAt(0)}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">${item.name}</div>
+        <div class="card-stock ${left<=1?'low':''}">${left>0 ? left+' disponibles' : 'Agotado'}</div>
+        <div class="card-price">${fmt.format(item.price)}</div>
+        <div class="qty-row">
+          <div class="stepper">
+            <button data-act="minus" ${qty<=0?'disabled':''}>−</button>
+            <span>${qty}</span>
+            <button data-act="plus" ${left<=0?'disabled':''}>+</button>
+          </div>
+          <button class="add-btn ${qty>0?'in-cart':''}" data-act="toggle" ${(qty<=0 && left<=0)?'disabled':''}>
+            ${qty>0 ? 'En tu lista' : 'Agregar'}
+          </button>
+        </div>
+      </div>
+    `;
+    card.querySelector('[data-act="minus"]').onclick = ()=> changeQty(item, -1);
+    card.querySelector('[data-act="plus"]').onclick = ()=> changeQty(item, 1);
+    card.querySelector('[data-act="toggle"]').onclick = ()=>{
+      if((cart[item.id]||0) === 0) changeQty(item, 1);
+    };
+    grid.appendChild(card);
+  });
+}
+
+function changeQty(item, delta){
+  const current = cart[item.id] || 0;
+  let next = current + delta;
+  if(next < 0) next = 0;
+  if(next > item.stock) next = item.stock;
+  if(next === 0) delete cart[item.id];
+  else cart[item.id] = next;
+  saveCart();
+  renderGrid();
+  renderCartBar();
+}
+
+function cartEntries(){
+  return Object.entries(cart).map(([id,qty])=>{
+    const item = ITEMS.find(i=>i.id===id);
+    return { item, qty, subtotal: item.price * qty };
+  }).filter(e=>e.item);
+}
+
+function renderCartBar(){
+  const entries = cartEntries();
+  const bar = document.getElementById('cartBar');
+  const count = entries.reduce((s,e)=>s+e.qty,0);
+  const total = entries.reduce((s,e)=>s+e.subtotal,0);
+  document.getElementById('cartInfo').textContent = count===0 ? '0 artículos' : `${count} artículo${count>1?'s':''}`;
+  document.getElementById('cartTotal').textContent = fmt.format(total);
+  bar.classList.toggle('show', count>0);
+}
+
+function openModal(){
+  const entries = cartEntries();
+  const list = document.getElementById('modalList');
+  list.innerHTML = "";
+  let total = 0;
+  entries.forEach(e=>{
+    total += e.subtotal;
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="name">${e.item.name}<span class="sub">${e.qty} × ${fmt.format(e.item.price)}</span></span><span>${fmt.format(e.subtotal)}</span>`;
+    list.appendChild(li);
+  });
+  document.getElementById('modalTotal').textContent = fmt.format(total);
+
+  const lines = entries.map(e=> `• ${e.item.name} x${e.qty} — ${fmt.format(e.subtotal)}`).join('%0A');
+  const text = `¡Hola! Quiero regalarles esto para ${CONFIG.names}:%0A${lines}%0A%0ATotal: ${fmt.format(total)} 💛`;
+  document.getElementById('waBtn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${text}`;
+
+  document.getElementById('overlay').classList.add('show');
+}
+
+document.getElementById('checkoutBtn').onclick = openModal;
+document.getElementById('closeBtn').onclick = ()=> document.getElementById('overlay').classList.remove('show');
+document.getElementById('overlay').onclick = (e)=>{ if(e.target.id==='overlay') e.currentTarget.classList.remove('show'); };
+document.getElementById('copyBtn').onclick = ()=>{
+  const entries = cartEntries();
+  const total = entries.reduce((s,e)=>s+e.subtotal,0);
+  const text = `Regalo para ${CONFIG.names}:\n` + entries.map(e=>`• ${e.item.name} x${e.qty} — ${fmt.format(e.subtotal)}`).join('\n') + `\n\nTotal: ${fmt.format(total)}`;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = document.getElementById('copyBtn');
+    const original = btn.textContent;
+    btn.textContent = "¡Copiado!";
+    setTimeout(()=> btn.textContent = original, 1500);
+  });
+};
+
+renderFilters();
+renderGrid();
+renderCartBar();
+</script>
+</body>
+</html>
