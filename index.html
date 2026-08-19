@@ -301,12 +301,15 @@
 
 <p class="thanks">Gracias por acompañarnos en esta espera ✨</p>
 
+<!-- Librerías de Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script>
 /* ================================================================
    1) CONFIGURACIÓN — edita esto con tus datos
    ================================================================ */
+  
 const CONFIG = {
   names: "Carolina y Adela",              // aparece en el título del hero
   whatsappNumber: "56926459015",                        // número de WhatsApp de los papás (ej: 569XXXXXXXX)
@@ -331,11 +334,7 @@ const CONFIG = {
     appId: "1:277549077600:web:99dcfb5366a0cb91765f05"
   }
 };
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-<!-- NUEVA LIBRERÍA DE AUTHENTICATION: -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
+  
 /* ================================================================
    2) ARTÍCULOS — agrega, borra o edita libremente.
    ================================================================ */
@@ -418,33 +417,39 @@ let activeCategory = "Todo";
 let dbReady = false;
 let db = null;
 
-function banner(msg, show){
-  const b = document.getElementById('statusBanner');
-  b.textContent = msg;
-  b.classList.toggle('show', !!show);
-}
-
 function initFirebase(){
   if (!CONFIG.firebase || !CONFIG.firebase.apiKey) {
-    banner("Falta conectar Firebase — revisa el README para activar el conteo compartido.", true);
+    banner("Falta conectar Firebase.", true);
     return;
   }
   try{
-    firebase.initializeApp(CONFIG.firebase);
-    db = firebase.database();
-    db.ref('claimed').on('value', snap=>{
-      claimedData = snap.val() || {};
-      dbReady = true;
-      banner('', false);
-      renderGrid();
+    firebase.initializeApp(CONFIG.firebase);[span_6](start_span)[span_6](end_span)[span_7](start_span)[span_7](end_span)
+    db = firebase.database();[span_8](start_span)[span_8](end_span)[span_9](start_span)[span_9](end_span)
+
+    // 👇 AQUÍ VA EL BLOQUE DE INICIO DE SESIÓN ANÓNIMO 👇
+    firebase.auth().signInAnonymously()
+      .then(() => {
+        console.log("Sesión anónima iniciada con éxito");
+      })
+      .catch(err => {
+        console.warn("Error en autenticación anónima:", err);
+      });
+    // 👆 --------------------------------------------- 👆
+
+    db.ref('claimed').on('value', snap=>{[span_10](start_span)[span_10](end_span)[span_11](start_span)[span_11](end_span)
+      claimedData = snap.val() || {};[span_12](start_span)[span_12](end_span)[span_13](start_span)[span_13](end_span)
+      dbReady = true;[span_14](start_span)[span_14](end_span)[span_15](start_span)[span_15](end_span)
+      banner('', false);[span_16](start_span)[span_16](end_span)[span_17](start_span)[span_17](end_span)
+      renderGrid();[span_18](start_span)[span_18](end_span)[span_19](start_span)[span_19](end_span)
     }, err=>{
-      banner("No se pudo conectar con la lista compartida. Intenta recargar la página.", true);
+      console.warn("No se pudo conectar a Firebase RTDB:", err);
     });
-    db.ref('claims').limitToLast(20).on('value', snap=>{
-      renderFeed(snap.val() || {});
-    });
+
+    db.ref('claims').limitToLast(20).on('value', snap=>{[span_20](start_span)[span_20](end_span)[span_21](start_span)[span_21](end_span)
+      renderFeed(snap.val() || {});[span_22](start_span)[span_22](end_span)[span_23](start_span)[span_23](end_span)
+    });[span_24](start_span)[span_24](end_span)[span_25](start_span)[span_25](end_span)
   }catch(e){
-    banner("Hubo un problema conectando Firebase — revisa la configuración en el README.", true);
+    console.warn("Firebase Init Error:", e);
   }
 }
 
