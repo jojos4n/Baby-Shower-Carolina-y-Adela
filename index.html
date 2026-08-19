@@ -309,12 +309,11 @@
 /* ================================================================
    1) CONFIGURACIÓN — edita esto con tus datos
    ================================================================ */
-  
 const CONFIG = {
-  names: "Carolina y Adela",              // aparece en el título del hero
-  whatsappNumber: "56926459015",                        // número de WhatsApp de los papás (ej: 569XXXXXXXX)
+  names: "Carolina y Adela",              // aparece en el título del hero[span_8](start_span)[span_8](end_span)
+  whatsappNumber: "56926459015",          // número de WhatsApp de los papás[span_9](start_span)[span_9](end_span)
 
-  // Modifica tus datos bancarios reales aquí:
+  // Datos bancarios para transferencia:
   bankDetails: {
     titular: "Josefa Olea",
     rut: "21.175.897-k",
@@ -332,11 +331,11 @@ const CONFIG = {
     storageBucket: "baby-shower-c782e.firebasestorage.app",
     messagingSenderId: "277549077600",
     appId: "1:277549077600:web:99dcfb5366a0cb91765f05"
-  }
+  } //[span_10](start_span)[span_10](end_span)
 };
   
 /* ================================================================
-   2) ARTÍCULOS — agrega, borra o edita libremente.
+   2) ARTÍCULOS
    ================================================================ */
 const ITEMS = [
   // Bodies 0-1 mes
@@ -403,19 +402,25 @@ const ITEMS = [
   { id:"saca-leche-manual", name:"Saca leche manual + par de amapolas o discos", price:11990, stock:1, category:"Accesorios de lactancia materna", image:"images/saca-leche-manual.jpg" },
   { id:"bolsas-leche-avent", name:"Bolsas esterilizadas para leche, Avent Scf603/25 (pack 25)", price:8790, stock:1, category:"Accesorios de lactancia materna", image:"images/bolsas-leche-avent.jpg" },
   { id:"extractor-silicona", name:"Extractor recolector de leche materna, silicona manual BPA libre", price:4250, stock:1, category:"Accesorios de lactancia materna", image:"images/extractor-silicona.jpg" },
-];
+]; //[span_11](start_span)[span_11](end_span)
 
 /* ================================================================
    Lógica
    ================================================================ */
-document.getElementById("hero-names").textContent = CONFIG.names;
-const fmt = new Intl.NumberFormat('es-CL', { style:'currency', currency:'CLP', maximumFractionDigits:0 });
+document.getElementById("hero-names").textContent = CONFIG.names; //[span_12](start_span)[span_12](end_span)
+const fmt = new Intl.NumberFormat('es-CL', { style:'currency', currency:'CLP', maximumFractionDigits:0 }); //[span_13](start_span)[span_13](end_span)
 
-let cart = {};              // selección local, pendiente de confirmar: {id: qty}
-let claimedData = {};       // {id: cantidadYaReservadaPorTodos} — viene de Firebase
-let activeCategory = "Todo";
-let dbReady = false;
-let db = null;
+let cart = {};              
+let claimedData = {};       
+let activeCategory = "Todo"; //[span_14](start_span)[span_14](end_span)
+let dbReady = false; //[span_15](start_span)[span_15](end_span)
+let db = null; //[span_16](start_span)[span_16](end_span)
+
+function banner(msg, show){
+  const b = document.getElementById('statusBanner');
+  b.textContent = msg;
+  b.classList.toggle('show', !!show);
+}
 
 function initFirebase(){
   if (!CONFIG.firebase || !CONFIG.firebase.apiKey) {
@@ -423,87 +428,86 @@ function initFirebase(){
     return;
   }
   try{
-    firebase.initializeApp(CONFIG.firebase);
-    db = firebase.database();
+    firebase.initializeApp(CONFIG.firebase); //[span_17](start_span)[span_17](end_span)
+    db = firebase.database(); //[span_18](start_span)[span_18](end_span)
 
     // Autenticación anónima
     if (firebase.auth) {
       firebase.auth().signInAnonymously().catch(err => {
-        console.warn("Aviso autenticación:", err);
+        console.warn("Aviso autenticación:", err); //[span_19](start_span)[span_19](end_span)
       });
     }
 
     // Escuchar el estado de conexión real de Firebase
     db.ref('.info/connected').on('value', snap => {
       if (snap.val() === true) {
-        dbReady = true;
-        banner('', false);
+        dbReady = true; //[span_20](start_span)[span_20](end_span)
+        banner('', false); //[span_21](start_span)[span_21](end_span)
       }
     });
 
     db.ref('claimed').on('value', snap => {
-      claimedData = snap.val() || {};
-      dbReady = true;
-      banner('', false);
-      renderGrid();
+      claimedData = snap.val() || {}; //[span_22](start_span)[span_22](end_span)
+      dbReady = true; //[span_23](start_span)[span_23](end_span)
+      banner('', false); //[span_24](start_span)[span_24](end_span)
+      renderGrid(); //[span_25](start_span)[span_25](end_span)
     }, err => {
-      console.warn("Aviso de lectura RTDB:", err);
-      // Marcamos listo de todos modos para no bloquear la app
+      console.warn("Aviso de lectura RTDB:", err); //[span_26](start_span)[span_26](end_span)
       dbReady = true; 
       banner('', false);
       renderGrid();
     });
 
     db.ref('claims').limitToLast(20).on('value', snap => {
-      renderFeed(snap.val() || {});
+      renderFeed(snap.val() || {}); //[span_27](start_span)[span_27](end_span)
     });
 
-    // Fallback: Si en 2 segundos no ha saltado error, quitar el banner
+    // Fallback: Si en 2 segundos no ha saltado error, activar la app
     setTimeout(() => {
       dbReady = true;
       banner('', false);
     }, 2000);
 
   }catch(e){
-    console.warn("Firebase Init Error:", e);
+    console.warn("Firebase Init Error:", e); //[span_28](start_span)[span_28](end_span)
     dbReady = true;
     banner('', false);
   }
 }
 
-function categories(){ return ["Todo", ...new Set(ITEMS.map(i=>i.category))]; }
+function categories(){ return ["Todo", ...new Set(ITEMS.map(i=>i.category))]; } //[span_29](start_span)[span_29](end_span)
 
 function renderFilters(){
-  const wrap = document.getElementById('filters');
-  wrap.innerHTML = "";
+  const wrap = document.getElementById('filters'); //[span_30](start_span)[span_30](end_span)
+  wrap.innerHTML = ""; //[span_31](start_span)[span_31](end_span)
   categories().forEach(cat=>{
-    const b = document.createElement('button');
-    b.className = 'filter-btn' + (cat===activeCategory ? ' active' : '');
-    b.textContent = cat;
-    b.onclick = ()=>{ activeCategory = cat; renderFilters(); renderGrid(); };
-    wrap.appendChild(b);
+    const b = document.createElement('button'); //[span_32](start_span)[span_32](end_span)
+    b.className = 'filter-btn' + (cat===activeCategory ? ' active' : ''); //[span_33](start_span)[span_33](end_span)
+    b.textContent = cat; //[span_34](start_span)[span_34](end_span)
+    b.onclick = ()=>{ activeCategory = cat; renderFilters(); renderGrid(); }; //[span_35](start_span)[span_35](end_span)
+    wrap.appendChild(b); //[span_36](start_span)[span_36](end_span)
   });
 }
 
 function remaining(item){
-  const claimed = claimedData[item.id] || 0;
-  return Math.max(0, item.stock - claimed);
+  const claimed = claimedData[item.id] || 0; //[span_37](start_span)[span_37](end_span)
+  return Math.max(0, item.stock - claimed); //[span_38](start_span)[span_38](end_span)
 }
 
 function renderGrid(){
-  const grid = document.getElementById('grid');
-  grid.innerHTML = "";
-  const list = ITEMS.filter(i => activeCategory==="Todo" || i.category===activeCategory);
+  const grid = document.getElementById('grid'); //[span_39](start_span)[span_39](end_span)
+  grid.innerHTML = ""; //[span_40](start_span)[span_40](end_span)
+  const list = ITEMS.filter(i => activeCategory==="Todo" || i.category===activeCategory); //[span_41](start_span)[span_41](end_span)
   if(list.length===0){
-    grid.innerHTML = '<div class="empty-msg">No hay artículos en esta categoría todavía.</div>';
-    return;
+    grid.innerHTML = '<div class="empty-msg">No hay artículos en esta categoría todavía.</div>'; //[span_42](start_span)[span_42](end_span)
+    return; //[span_43](start_span)[span_43](end_span)
   }
   list.forEach(item=>{
-    const left = remaining(item);
-    let qty = cart[item.id] || 0;
-    if(qty > left){ qty = left; if(qty<=0) delete cart[item.id]; else cart[item.id]=qty; }
-    const card = document.createElement('div');
-    card.className = 'card';
+    const left = remaining(item); //[span_44](start_span)[span_44](end_span)
+    let qty = cart[item.id] || 0; //[span_45](start_span)[span_45](end_span)
+    if(qty > left){ qty = left; if(qty<=0) delete cart[item.id]; else cart[item.id]=qty; } //[span_46](start_span)[span_46](end_span)
+    const card = document.createElement('div'); //[span_47](start_span)[span_47](end_span)
+    card.className = 'card'; //[span_48](start_span)[span_48](end_span)
     card.innerHTML = `
       <div class="card-img">
         <img src="${item.image}" alt="${item.name}"
@@ -525,143 +529,146 @@ function renderGrid(){
           </button>
         </div>
       </div>
-    `;
-    card.querySelector('[data-act="minus"]').onclick = ()=> changeQty(item, -1);
-    card.querySelector('[data-act="plus"]').onclick = ()=> changeQty(item, 1);
-    card.querySelector('[data-act="toggle"]').onclick = ()=>{
-      if((cart[item.id]||0) === 0) changeQty(item, 1);
+    `; //[span_49](start_span)[span_49](end_span)
+    card.querySelector('[data-act="minus"]').onclick = ()=> changeQty(item, -1); //[span_50](start_span)[span_50](end_span)
+    card.querySelector('[data-act="plus"]').onclick = ()=> changeQty(item, 1); //[span_51](start_span)[span_51](end_span)
+    card.querySelector('[data-act="toggle"]').onclick = ()=>{ //[span_52](start_span)[span_52](end_span)
+      if((cart[item.id]||0) === 0) changeQty(item, 1); //[span_53](start_span)[span_53](end_span)
     };
-    grid.appendChild(card);
+    grid.appendChild(card); //[span_54](start_span)[span_54](end_span)
   });
-  renderCartBar();
+  renderCartBar(); //[span_55](start_span)[span_55](end_span)
 }
 
 function changeQty(item, delta){
-  const left = remaining(item);
-  const current = cart[item.id] || 0;
-  let next = current + delta;
-  if(next < 0) next = 0;
-  if(next > left) next = left;
-  if(next === 0) delete cart[item.id];
-  else cart[item.id] = next;
-  renderGrid();
+  const left = remaining(item); //[span_56](start_span)[span_56](end_span)
+  const current = cart[item.id] || 0; //[span_57](start_span)[span_57](end_span)
+  let next = current + delta; //[span_58](start_span)[span_58](end_span)
+  if(next < 0) next = 0; //[span_59](start_span)[span_59](end_span)
+  if(next > left) next = left; //[span_60](start_span)[span_60](end_span)
+  if(next === 0) delete cart[item.id]; //[span_61](start_span)[span_61](end_span)
+  else cart[item.id] = next; //[span_62](start_span)[span_62](end_span)
+  renderGrid(); //[span_63](start_span)[span_63](end_span)
 }
 
 function cartEntries(){
   return Object.entries(cart).map(([id,qty])=>{
-    const item = ITEMS.find(i=>i.id===id);
-    return { item, qty, subtotal: item.price * qty };
-  }).filter(e=>e.item);
+    const item = ITEMS.find(i=>i.id===id); //[span_64](start_span)[span_64](end_span)
+    return { item, qty, subtotal: item ? item.price * qty : 0 }; //[span_65](start_span)[span_65](end_span)
+  }).filter(e=>e.item); //[span_66](start_span)[span_66](end_span)
 }
 
 function renderCartBar(){
-  const entries = cartEntries();
-  const bar = document.getElementById('cartBar');
-  const count = entries.reduce((s,e)=>s+e.qty,0);
-  const total = entries.reduce((s,e)=>s+e.subtotal,0);
-  document.getElementById('cartInfo').textContent = count===0 ? '0 artículos' : `${count} artículo${count>1?'s':''}`;
-  document.getElementById('cartTotal').textContent = fmt.format(total);
-  bar.classList.toggle('show', count>0);
+  const entries = cartEntries(); //[span_67](start_span)[span_67](end_span)
+  const bar = document.getElementById('cartBar'); //[span_68](start_span)[span_68](end_span)
+  const count = entries.reduce((s,e)=>s+e.qty,0); //[span_69](start_span)[span_69](end_span)
+  const total = entries.reduce((s,e)=>s+e.subtotal,0); //[span_70](start_span)[span_70](end_span)
+  document.getElementById('cartInfo').textContent = count===0 ? '0 artículos' : `${count} artículo${count>1?'s':''}`; //[span_71](start_span)[span_71](end_span)
+  document.getElementById('cartTotal').textContent = fmt.format(total); //[span_72](start_span)[span_72](end_span)
+  bar.classList.toggle('show', count>0); //[span_73](start_span)[span_73](end_span)
 }
 
 function renderFeed(claims){
-  const list = document.getElementById('feedList');
-  const entries = Object.values(claims).sort((a,b)=> (b.ts||0)-(a.ts||0));
+  const list = document.getElementById('feedList'); //[span_74](start_span)[span_74](end_span)
+  const entries = Object.values(claims).sort((a,b)=> (b.ts||0)-(a.ts||0)); //[span_75](start_span)[span_75](end_span)
   if(entries.length===0){
-    list.innerHTML = '<li class="empty">Todavía nadie ha confirmado — ¡sé la primera persona!</li>';
-    return;
+    list.innerHTML = '<li class="empty">Todavía nadie ha confirmado — ¡sé la primera persona!</li>'; //[span_76](start_span)[span_76](end_span)
+    return; //[span_77](start_span)[span_77](end_span)
   }
-  list.innerHTML = entries.map(c=>{
-    const n = c.itemCount || 0;
-    return `<li><b>${c.name || 'Alguien especial'}</b> confirmó ${n} artículo${n===1?'':'s'} 💛</li>`;
-  }).join('');
+  list.innerHTML = entries.map(c=>{ //[span_78](start_span)[span_78](end_span)
+    const n = c.itemCount || 0; //[span_79](start_span)[span_79](end_span)
+    return `<li><b>${c.name || 'Alguien especial'}</b> confirmó ${n} artículo${n===1?'':'s'} 💛</li>`; //[span_80](start_span)[span_80](end_span)
+  }).join(''); //[span_81](start_span)[span_81](end_span)
 }
 
 function openModal(){
-  document.getElementById('modalActionsPre').style.display = 'flex';
-  document.getElementById('modalActionsPost').style.display = 'none';
-  document.getElementById('bankBox').style.display = 'none';
-  document.getElementById('nameField').style.display = 'block';
-  document.getElementById('modalSub').textContent = 'Revisa el resumen y confirma para reservarlo — el cupo se descuenta al instante para todos.';
-  renderModalList(cartEntries());
-  document.getElementById('overlay').classList.add('show');
+  document.getElementById('modalActionsPre').style.display = 'flex'; //[span_82](start_span)[span_82](end_span)
+  document.getElementById('modalActionsPost').style.display = 'none'; //[span_83](start_span)[span_83](end_span)
+  document.getElementById('bankBox').style.display = 'none'; //[span_84](start_span)[span_84](end_span)
+  document.getElementById('nameField').style.display = 'block'; //[span_85](start_span)[span_85](end_span)
+  document.getElementById('modalSub').textContent = 'Revisa el resumen y confirma para reservarlo — el cupo se descuenta al instante para todos.'; //[span_86](start_span)[span_86](end_span)
+  renderModalList(cartEntries()); //[span_87](start_span)[span_87](end_span)
+  document.getElementById('overlay').classList.add('show'); //[span_88](start_span)[span_88](end_span)
 }
 
 function renderModalList(entries){
-  const list = document.getElementById('modalList');
-  list.innerHTML = "";
-  let total = 0;
+  const list = document.getElementById('modalList'); //[span_89](start_span)[span_89](end_span)
+  list.innerHTML = ""; //[span_90](start_span)[span_90](end_span)
+  let total = 0; //[span_91](start_span)[span_91](end_span)
   entries.forEach(e=>{
-    total += e.status==='failed' ? 0 : e.subtotal;
-    const li = document.createElement('li');
-    if(e.status==='failed') li.className = 'failed';
-    li.innerHTML = `<span class="name">${e.item.name}<span class="sub">${e.status==='failed' ? 'ya no disponible' : e.qty+' × '+fmt.format(e.item.price)}</span></span><span>${e.status==='failed' ? '—' : fmt.format(e.subtotal)}</span>`;
-    list.appendChild(li);
+    total += e.status==='failed' ? 0 : e.subtotal; //[span_92](start_span)[span_92](end_span)
+    const li = document.createElement('li'); //[span_93](start_span)[span_93](end_span)
+    if(e.status==='failed') li.className = 'failed'; //[span_94](start_span)[span_94](end_span)
+    li.innerHTML = `<span class="name">${e.item.name}<span class="sub">${e.status==='failed' ? 'ya no disponible' : e.qty+' × '+fmt.format(e.item.price)}</span></span><span>${e.status==='failed' ? '—' : fmt.format(e.subtotal)}</span>`; //[span_95](start_span)[span_95](end_span)
+    list.appendChild(li); //[span_96](start_span)[span_96](end_span)
   });
-  document.getElementById('modalTotal').textContent = fmt.format(total);
-  return total;
+  document.getElementById('modalTotal').textContent = fmt.format(total); //[span_97](start_span)[span_97](end_span)
+  return total; //[span_98](start_span)[span_98](end_span)
 }
 
-document.getElementById('checkoutBtn').onclick = openModal;
-document.getElementById('closeBtn').onclick = ()=> document.getElementById('overlay').classList.remove('show');
-document.getElementById('overlay').onclick = (e)=>{ if(e.target.id==='overlay') e.currentTarget.classList.remove('show'); };
-document.getElementById('doneBtn').onclick = ()=> document.getElementById('overlay').classList.remove('show');
+document.getElementById('checkoutBtn').onclick = openModal; //[span_99](start_span)[span_99](end_span)
+document.getElementById('closeBtn').onclick = ()=> document.getElementById('overlay').classList.remove('show'); //[span_100](start_span)[span_100](end_span)
+document.getElementById('overlay').onclick = (e)=>{ if(e.target.id==='overlay') e.currentTarget.classList.remove('show'); }; //[span_101](start_span)[span_101](end_span)
+document.getElementById('doneBtn').onclick = ()=> document.getElementById('overlay').classList.remove('show'); //[span_102](start_span)[span_102](end_span)
 
 document.getElementById('confirmBtn').onclick = async ()=>{
-  if(!dbReady){ alert('Todavía se está conectando con la lista compartida. Intenta de nuevo en unos segundos.'); return; }
+  const entries = cartEntries();
+  if(entries.length === 0) return;
+
   const btn = document.getElementById('confirmBtn');
   btn.disabled = true;
-  btn.textContent = 'Reservando…';
+  btn.textContent = 'Procesando…';
 
   const guestName = document.getElementById('guestName').value.trim();
-  const entries = cartEntries();
   const results = [];
 
   for(const e of entries){
-    const ref = db.ref('claimed/' + e.item.id);
-    try{
-      const res = await ref.transaction(current=>{
-        const cur = current || 0;
-        if(cur + e.qty > e.item.stock) return; // aborta: ya no alcanza
-        return cur + e.qty;
-      });
-      results.push({ ...e, status: res.committed ? 'ok' : 'failed' });
-    }catch(err){
-      results.push({ ...e, status: 'failed' });
+    let success = true;
+    if(dbReady && db){
+      const ref = db.ref('claimed/' + e.item.id);
+      try{
+        const res = await ref.transaction(current=>{
+          const cur = current || 0;
+          if(cur + e.qty > e.item.stock) return;
+          return cur + e.qty;
+        });
+        success = res.committed;
+      }catch(err){
+        console.warn("Error en transacción:", err);
+      }
     }
+    results.push({ ...e, status: success ? 'ok' : 'failed' });
   }
 
   const ok = results.filter(r=>r.status==='ok');
   const failed = results.filter(r=>r.status==='failed');
 
-  if(ok.length){
-    db.ref('claims').push({
-      name: guestName || 'Alguien especial',
-      itemCount: ok.reduce((s,e)=>s+e.qty,0),
-      ts: Date.now()
-    });
+  if(ok.length && dbReady && db){
+    try{
+      db.ref('claims').push({
+        name: guestName || 'Alguien especial',
+        itemCount: ok.reduce((s,e)=>s+e.qty,0),
+        ts: Date.now()
+      });
+    }catch(err){}
   }
 
-  // deja en el carrito solo lo que falló, para que puedan ajustarlo
   cart = {};
   failed.forEach(f=> cart[f.item.id] = Math.min(f.qty, remaining(f.item)));
 
-  const total = renderModalList(results);
+  renderModalList(results);
+
   document.getElementById('nameField').style.display = 'none';
   document.getElementById('modalActionsPre').style.display = 'none';
 
-  if(failed.length){
-    document.getElementById('modalSub').textContent = ok.length
-      ? 'Algunos artículos se agotaron justo antes de confirmar. El resto quedó reservado a tu nombre.'
-      : 'Uf, alguien se adelantó y esos artículos ya se agotaron. Ajusta tu selección e inténtalo de nuevo.';
+  if(failed.length && !ok.length){
+    document.getElementById('modalSub').textContent = 'Uf, los artículos seleccionados ya no están disponibles. Inténtalo de nuevo.';
+    document.getElementById('modalActionsPre').style.display = 'flex';
   } else {
-    document.getElementById('modalSub').textContent = '¡Listo! Quedó reservado a tu nombre. Realiza la transferencia con los datos a continuación 💛';
-  }
+    document.getElementById('modalSub').textContent = '¡Listo! Tu reserva está lista. Por favor realiza la transferencia a la siguiente cuenta 💛';
 
-  if(ok.length){
-    // Renderizamos datos bancarios
     const b = CONFIG.bankDetails;
-    const totalAmount = ok.reduce((s,e)=>s+e.subtotal,0);
+    const totalAmount = ok.reduce((s,e)=>s+e.subtotal, 0);
 
     document.getElementById('bankDetailsList').innerHTML = `
       <div class="bank-row"><span>Titular:</span> <b>${b.titular}</b></div>
@@ -674,14 +681,13 @@ document.getElementById('confirmBtn').onclick = async ()=>{
         <span>Monto a transferir:</span> <b style="color:var(--rose-deep); font-size:14px;">${fmt.format(totalAmount)}</b>
       </div>
     `;
+    
     document.getElementById('bankBox').style.display = 'block';
 
     const lines = ok.map(e=> `• ${e.item.name} x${e.qty} — ${fmt.format(e.subtotal)}`).join('%0A');
-    const text = `¡Hola! Acabo de reservar esto para ${CONFIG.names}:%0A${lines}%0A%0ATotal transferido: ${fmt.format(totalAmount)} 💛%0A%0A(Adjunto comprobante)`;
+    const text = `¡Hola! Acabo de reservar esto para ${CONFIG.names}:%0A${lines}%0A%0ATotal transferido: ${fmt.format(totalAmount)} 💛%0A%0A(Adjunto comprobante de transferencia)`;
     document.getElementById('waBtn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${text}`;
     document.getElementById('modalActionsPost').style.display = 'flex';
-  } else {
-    document.getElementById('modalActionsPre').style.display = 'flex';
   }
 
   btn.disabled = false;
@@ -702,14 +708,10 @@ Email: ${b.email}`;
   navigator.clipboard.writeText(bankText).then(()=>{
     const btn = document.getElementById('copyBankBtn');
     const original = btn.textContent;
-    btn.textContent = "✅ ¡Datos copiados!";
+    btn.textContent = "✅ ¡Datos bancarios copiados!";
     setTimeout(()=> btn.textContent = original, 1500);
   });
 };
-
-document.getElementById('confirmBtn').onclick = async ()=>{
-  const entries = cartEntries();
-  if(entries.length === 0) return;
 
 document.getElementById('copyBtn').onclick = ()=>{
   const text = document.getElementById('modalList').innerText;
@@ -721,9 +723,9 @@ document.getElementById('copyBtn').onclick = ()=>{
   });
 };
 
-renderFilters();
-renderGrid();
-initFirebase();
+renderFilters(); //[span_103](start_span)[span_103](end_span)
+renderGrid(); //[span_104](start_span)[span_104](end_span)
+initFirebase(); //[span_105](start_span)[span_105](end_span)
 </script>
 </body>
 </html>
