@@ -423,33 +423,51 @@ function initFirebase(){
     return;
   }
   try{
-    firebase.initializeApp(CONFIG.firebase);[span_6](start_span)[span_6](end_span)[span_7](start_span)[span_7](end_span)
-    db = firebase.database();[span_8](start_span)[span_8](end_span)[span_9](start_span)[span_9](end_span)
+    firebase.initializeApp(CONFIG.firebase);
+    db = firebase.database();
 
-    // 👇 AQUÍ VA EL BLOQUE DE INICIO DE SESIÓN ANÓNIMO 👇
-    firebase.auth().signInAnonymously()
-      .then(() => {
-        console.log("Sesión anónima iniciada con éxito");
-      })
-      .catch(err => {
-        console.warn("Error en autenticación anónima:", err);
+    // Autenticación anónima
+    if (firebase.auth) {
+      firebase.auth().signInAnonymously().catch(err => {
+        console.warn("Aviso autenticación:", err);
       });
-    // 👆 --------------------------------------------- 👆
+    }
 
-    db.ref('claimed').on('value', snap=>{[span_10](start_span)[span_10](end_span)[span_11](start_span)[span_11](end_span)
-      claimedData = snap.val() || {};[span_12](start_span)[span_12](end_span)[span_13](start_span)[span_13](end_span)
-      dbReady = true;[span_14](start_span)[span_14](end_span)[span_15](start_span)[span_15](end_span)
-      banner('', false);[span_16](start_span)[span_16](end_span)[span_17](start_span)[span_17](end_span)
-      renderGrid();[span_18](start_span)[span_18](end_span)[span_19](start_span)[span_19](end_span)
-    }, err=>{
-      console.warn("No se pudo conectar a Firebase RTDB:", err);
+    // Escuchar el estado de conexión real de Firebase
+    db.ref('.info/connected').on('value', snap => {
+      if (snap.val() === true) {
+        dbReady = true;
+        banner('', false);
+      }
     });
 
-    db.ref('claims').limitToLast(20).on('value', snap=>{[span_20](start_span)[span_20](end_span)[span_21](start_span)[span_21](end_span)
-      renderFeed(snap.val() || {});[span_22](start_span)[span_22](end_span)[span_23](start_span)[span_23](end_span)
-    });[span_24](start_span)[span_24](end_span)[span_25](start_span)[span_25](end_span)
+    db.ref('claimed').on('value', snap => {
+      claimedData = snap.val() || {};
+      dbReady = true;
+      banner('', false);
+      renderGrid();
+    }, err => {
+      console.warn("Aviso de lectura RTDB:", err);
+      // Marcamos listo de todos modos para no bloquear la app
+      dbReady = true; 
+      banner('', false);
+      renderGrid();
+    });
+
+    db.ref('claims').limitToLast(20).on('value', snap => {
+      renderFeed(snap.val() || {});
+    });
+
+    // Fallback: Si en 2 segundos no ha saltado error, quitar el banner
+    setTimeout(() => {
+      dbReady = true;
+      banner('', false);
+    }, 2000);
+
   }catch(e){
     console.warn("Firebase Init Error:", e);
+    dbReady = true;
+    banner('', false);
   }
 }
 
@@ -688,6 +706,10 @@ Email: ${b.email}`;
     setTimeout(()=> btn.textContent = original, 1500);
   });
 };
+
+document.getElementById('confirmBtn').onclick = async ()=>{
+  const entries = cartEntries();
+  if(entries.length === 0) return;
 
 document.getElementById('copyBtn').onclick = ()=>{
   const text = document.getElementById('modalList').innerText;
